@@ -449,7 +449,7 @@ function App() {
         </section>
 
         {/* As Seen In Section */}
-        <section className="flex items-center justify-around py-8 gap-4 max-w-screen-xl mx-auto">
+        <section className="flex items-center justify-around py-8 gap-4 max-w-7xl mx-auto">
           <p>As seen in:</p>
           {[
             "https://websitedemos.net/recycled-shoe-store-04/wp-content/uploads/sites/983/2021/11/recycled-shoe-store-featured-in-logo-5.svg",
@@ -461,10 +461,10 @@ function App() {
             <img key={i} src={src} alt={`featured-${i}`} className="h-30" />
           ))}
         </section>
-        <hr className=" border-gray-300 max-w-screen-xl mx-auto" />
+        <hr className=" border-gray-300 max-w-7xl mx-auto" />
 
         {/* About Us Section */}
-        <section className="flex flex-col md:flex-row items-center py-22 justify-between max-w-screen-xl mx-auto">
+        <section className="flex flex-col md:flex-row items-center py-22 justify-between max-w-7xl mx-auto">
           <div className="flex-1 max-w-[600px]">
             <img
               src="https://websitedemos.net/recycled-shoe-store-04/wp-content/uploads/sites/983/2021/11/recycled-shoe-store-home-about-image.jpg"
@@ -657,7 +657,6 @@ function App() {
         </section>
 
         {/* Certifications */}
-
 
 
         
