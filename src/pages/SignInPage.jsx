@@ -1,0 +1,110 @@
+import React from 'react'
+
+const SignInPage = () => {
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+            <div className="max-w-lg bg-white shadow-lg rounded-2xl p-8 ">
+                {/* Sign up form */}
+                <div className="">
+                    <h1 className="text-2xl font-semibold text-center mb-2">Sign In Now</h1>
+                    <p className="text-gray-600 text-center mb-6">
+                        Enjoy the convenience of a single account across all participating brands.
+                    </p>
+                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 mb-4 flex items-center rounded-sm transition-colors duration-300">
+                        <div className="w-6 h-6 ml-3">
+                            <img src="/E-commerce App/facebook-inverted-icon.svg" alt="" />
+                        </div>
+                        <span className="w-[full] ">Sign In With Facebook</span>
+                    </button>
+
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                        <hr className='border-gray-100 w-[36%]' />
+                        <p className="text-center text-gray-500 text-xs md:text-base ">OR VIA EMAIL</p>
+                        <hr className='border-gray-100 w-[36%]' />
+                    </div>
+
+                    <div className="mt-4">
+                        <label htmlFor="firstName" className="text-sm font-semibold">E-mail</label>
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            className="border border-gray-300  p-2 w-full  rounded-sm"
+                        />
+                    </div>
+
+                    <div className="mt-4">
+                        <label htmlFor="firstName" className="text-sm font-semibold">Password</label>
+                        <div className="relative">
+                            <input
+                                type="password"
+                                placeholder="Enter your password"
+                                className="border border-gray-300  p-2 w-full  rounded-sm"
+                            />
+                            {/* Eye icon (visible) */}
+                            <div className="absolute right-3 top-2.5 text-gray-500">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                    />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </div>
+                            {/* eye closed icon  */}
+                            <div className="absolute right-3 top-2.5 text-gray-500">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M3 3l18 18M10.477 10.477A3 3 0 0112 9c.828 0 1.578.336 2.121.879M9.88 9.879A3 3 0 0012 15c.828 0 1.578-.336 2.121-.879M2.458 12C3.732 7.943 7.523 5 12 5c1.794 0 3.465.479 4.9 1.318M19.542 17.683C18.147 19.02 15.842 20 12 20c-4.477 0-8.268-2.943-9.542-7"
+                                    />
+                                </svg>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div className="flex items-center mt-4 justify-between">
+                        <div>
+                            <input type="checkbox" id="recaptcha" className="mr-2" />
+                            <label htmlFor="recaptcha" className="text-sm text-black-600 font-semibold">
+                                Remember Me
+                            </label>
+                        </div>
+                        <a href="" className="text-sm text-[#667eea] font-bold" >Forgot Password</a>
+                    </div>
+
+                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-sm mt-6 transition-colors duration-300">
+                        Sign In
+                    </button>
+
+                    <div className="flex items-center justify-center gap-3 mt-4">
+                        <hr className='border-gray-200 w-[22%]' />
+                        <p className="text-center text-gray-500 text-xs md:text-sm font-bold ">DON'T HAVE AN ACCOUNT?</p>
+                        <hr className='border-gray-200 w-[22%]' />
+                    </div>
+                    <button className="w-full bg-white-600 border-violet-300 border-2 hover:bg-blue-700 hover:border-white hover:text-white font-medium py-2 rounded-sm mt-6 transition-colors duration-300">
+                        Sign Up Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default SignInPage
