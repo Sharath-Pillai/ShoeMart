@@ -1,4 +1,26 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+
 function Home() {
+  const [shoelist, setShoelist] = useState("");
+
+  useEffect(() => {
+    fetch("https://pokeapi.co/api/v2")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network responce was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setShoelist(data);
+      })
+      .catch((error) => {
+        console.log("fetch error",error);
+      });
+  }, []);
+
   return (
     <>
       <div className="px-12 m-0 bg-white">
@@ -19,12 +41,16 @@ function Home() {
                 Discover the latest arrivals from Recycled.
               </p>
               <div className="flex gap-4">
-                <button className="bg-white text-black px-5 py-3 font-semibold hover:bg-gray-200">
-                  Shop Men
-                </button>
-                <button className="bg-white text-black px-5 py-3 font-semibold hover:bg-gray-200">
-                  Shop Women
-                </button>
+                <Link to="/menshoelist">
+                  <button className="bg-white text-black px-5 py-3 font-semibold hover:bg-gray-200">
+                    Shop Men
+                  </button>
+                </Link>
+                <Link to="/womenshoelist">
+                  <button className="bg-white text-black px-5 py-3 font-semibold hover:bg-gray-200">
+                    Shop Women
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -49,14 +75,21 @@ function Home() {
         <section className="py-16 max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold">Our Best Sellers</h2>
-            <a
-              href="#"
+            <Link
+              to="/allcollections"
               className="text-gray-600 font-bold underline decoration-2 decoration-amber-400 hover:decoration-black underline-offset-4 transition-colors duration-300"
             >
               View All Best Sellers
-            </a>
+            </Link>
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* {shoelist.map((shoes,index)=>{
+
+          })
+
+          } */}
+
             {[1, 2, 3].map((i) => (
               <div
                 key={i}

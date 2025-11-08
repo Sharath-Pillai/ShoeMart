@@ -14,7 +14,7 @@ const Toppromobar = () => {
               <span className="flex items-center gap-2">Home Delivery</span>
             </div>
             <div className="text-right">
-              <span className="mr-4">Deliver to <strong>Al Kharaitiyat</strong></span>
+              <span className="mr-4">Deliver to <strong>Alappuzha</strong></span>
               <span className="text-yellow-500">Hi, Sharath</span>
             </div>
           </div>
