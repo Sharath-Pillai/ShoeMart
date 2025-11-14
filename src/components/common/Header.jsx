@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
 const Header = () => {
+  // const[search,setsearch]=useState('')
+  
+
+
+  const[shoes,setShoelist]=useState([])
+  const handleSearch = (e) => {
+    const keyValue = e.target.value;
+    console.log(keyValue);
+    for (let i = 0; i < shoes.length; i++) {
+      for (let j = 0; j < shoes[i].name.length; j++) {
+        if (keyValue === shoes[i].name[j]) {
+          setShoelist(keyValue);
+        }
+      }
+    }
+  };
+
   return (
     <header className="flex justify-between items-center py-2 px-14 bg-white shadow-sm border-b">
       <div className="flex items-center gap-6">
-        <div className="logo text-2xl font-bold text-orange-500"><Link to="/">SHOEMART</Link></div>
+        <div className="logo text-2xl font-bold text-orange-500">
+          <Link to="/">SHOEMART</Link>
+        </div>
         <nav>
           <ul className="flex gap-6 text-gray-400 uppercase font-semibold">
             <li className="hover:text-black cursor-pointer">
@@ -25,6 +44,7 @@ const Header = () => {
           <input
             className="flex-1 bg-transparent outline-none text-sm"
             placeholder="Find your Everything"
+            onChange={(e) => handleSearch(e)}
           />
           <button className="text-sm px-3">Search</button>
         </div>

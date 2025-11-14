@@ -1,20 +1,17 @@
 import React from "react";
+import Backnavbar from "../components/common/Backnavbar";
 
 const MenShoePage = () => {
   return (
     <div className="min-h-screen bg-white text-gray-800">
       {/* Top nav / breadcrumbs */}
-            <header className="bg-white border-b border-red-200">
-                <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <a href="#" className="text-sm text-gray-600 hover:underline">&lt; Back</a>
-                </div>
-            </header>
+            <Backnavbar/>
       {/* Hero / breadcrumbs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex items-center justify-between">
           <div>
             <div className="text-sm text-gray-500">
-              Home / Men / Shoes For Men
+              Home / Shoes For Men
             </div>
             <h1 className="text-3xl font-semibold mt-2">Shoes For Men</h1>
             <p className="text-gray-500 mt-2">
@@ -149,6 +146,7 @@ const MenShoePage = () => {
                 <select className="border rounded-md px-3 py-1 text-sm">
                   <option>Sort by: Discount</option>
                   <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
                 </select>
               </div>
             </div>

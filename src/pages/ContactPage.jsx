@@ -1,14 +1,10 @@
+import Backnavbar from "../components/common/Backnavbar";
+
 export default function ContactPage() {
   return (
     <>
       {/* Top nav / breadcrumbs */}
-      <header className="bg-white border-b border-red-200">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <a href="#" className="text-sm text-gray-600 hover:underline">
-            &lt; Back
-          </a>
-        </div>
-      </header>
+      <Backnavbar/>
       <div className="bg-gray-50 min-h-screen py-16">
         {/* Page Title */}
         <h1 className="text-4xl font-bold text-center mb-12 text-gray-900">

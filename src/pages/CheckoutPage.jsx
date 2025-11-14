@@ -1,14 +1,11 @@
 import React from 'react'
+import Backnavbar from '../components/common/Backnavbar'
 
 const CheckoutPage = () => {
   return (
     <div className="w-full bg-white text-[#1a1a1a] font-sans">
       {/* Top nav / breadcrumbs */}
-            <header className="bg-white border-b border-red-200">
-                <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <a href="#" className="text-sm text-gray-600 hover:underline">&lt; Back</a>
-                </div>
-            </header>
+            <Backnavbar/>
       <div className="max-w-[1200px] mx-auto pt-6 pb-16 grid grid-cols-3 gap-8">
         <div className="col-span-2">
           <h2 className="text-xl font-semibold mb-6">Select a shipping method</h2>

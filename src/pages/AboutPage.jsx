@@ -1,12 +1,10 @@
+import Backnavbar from "../components/common/Backnavbar";
+
 const About = () => {
   return (
     <>
     {/* Top nav / breadcrumbs */}
-            <header className="bg-white border-b border-red-200">
-                <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <a href="#" className="text-sm text-gray-600 hover:underline">&lt; Back</a>
-                </div>
-            </header>
+            <Backnavbar/>
       {/* About Us Section */}
       <section className="flex flex-col md:flex-row items-center py-22 justify-between max-w-7xl mx-auto">
         <div className="flex-1 max-w-[600px]">

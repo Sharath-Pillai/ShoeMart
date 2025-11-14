@@ -5,7 +5,7 @@ function Home() {
   const [shoelist, setShoelist] = useState("");
 
   useEffect(() => {
-    fetch("https://pokeapi.co/api/v2")
+    fetch("/shoeDetails.json")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network responce was not ok");
@@ -17,7 +17,7 @@ function Home() {
         setShoelist(data);
       })
       .catch((error) => {
-        console.log("fetch error",error);
+        console.log("fetch error", error);
       });
   }, []);
 
@@ -27,7 +27,7 @@ function Home() {
         {/* Hero Section */}
         <section className="relative">
           <div
-            className="h-[700px] w-full bg-cover bg-center flex items-center"
+            className="h-[700px] w-full bg-cover bg-center flex items-center my-2"
             style={{
               backgroundImage:
                 "url('/background-Images/bannerinmainsection.jpg')",
@@ -118,9 +118,11 @@ function Home() {
             }}
           >
             <h1 className="text-white font-bold text-2xl">Men</h1>
-            <button className="bg-white text-black px-5 py-3 font-semibold hover:bg-gray-200">
-              Shop Men
-            </button>
+            <Link to="/menshoelist">
+              <button className="bg-white text-black px-5 py-3 font-semibold hover:bg-gray-200">
+                Shop Men
+              </button>
+            </Link>
           </div>
 
           <div
@@ -131,9 +133,11 @@ function Home() {
             }}
           >
             <h1 className="text-white font-bold text-2xl">Women</h1>
-            <button className="bg-white text-black px-5 py-3 font-semibold hover:bg-gray-200">
-              Shop Women
-            </button>
+            <Link to="/womenshoelist">
+              <button className="bg-white text-black px-5 py-3 font-semibold hover:bg-gray-200">
+                Shop Women
+              </button>
+            </Link>
           </div>
         </section>
 
@@ -141,12 +145,12 @@ function Home() {
         <section className="py-16 max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold">New Arrivals</h2>
-            <a
-              href="#"
+            <Link
+              to="/allcollections"
               className="text-gray-600 font-bold underline decoration-2 decoration-amber-400 hover:decoration-black underline-offset-4 transition-colors duration-300"
             >
               View All New Arrivals
-            </a>
+            </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (

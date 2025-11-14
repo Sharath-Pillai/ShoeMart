@@ -1,16 +1,11 @@
 import React from "react";
+import Backnavbar from "../components/common/Backnavbar";
 
 const CartPage = () => {
   return (
     <div className="w-full bg-white text-[#1a1a1a] font-sans">
       {/* Top nav / breadcrumbs */}
-      <header className="bg-white border-b border-red-200">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <a href="#" className="text-sm text-gray-600 hover:underline">
-            &lt; Back
-          </a>
-        </div>
-      </header>
+      <Backnavbar/>
 
       <div className="max-w-[1200px] mx-auto pt-4">
         <div className="grid grid-cols-3 gap-6 mt-8">
