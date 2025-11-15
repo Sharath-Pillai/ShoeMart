@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import Backnavbar from "../components/common/Backnavbar";
+import { ShoeContext } from "../context/shoeContext";
+import { Link } from "react-router-dom";
 
 const WomenshoePage = () => {
+  const { shoesData } = useContext(ShoeContext);
   return (
     <div className="min-h-screen bg-white text-gray-800">
       {/* Top nav / breadcrumbs */}
-     <Backnavbar/>
+      <Backnavbar />
       {/* Hero / breadcrumbs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-sm text-gray-500">
-              Home / Shoes For Women
-            </div>
+            <div className="text-sm text-gray-500">Home / Shoes For Women</div>
             <h1 className="text-3xl font-semibold mt-2">Shoes For Women</h1>
             <p className="text-gray-500 mt-2">
               Reveal an unmatched collection of shoes for women online at
@@ -188,48 +189,53 @@ const WomenshoePage = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div
-                  key={i}
-                  className="bg-white border rounded-md overflow-hidden shadow-sm"
-                >
-                  <div className="relative">
-                    <img
-                      src={`https://images.unsplash.com/photo-1519741492700-5bd1d2e3d7a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60&fm=jpg&crop=faces&sig=${i}`}
-                      alt="shoe"
-                      className="w-full h-56 object-contain bg-white"
-                    />
-                    <button className="absolute top-3 right-3 bg-white rounded-full p-2 shadow">
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div className="p-3">
-                    <div className="text-sm text-gray-500">Lee Cooper</div>
-                    <div className="flex items-baseline gap-2 mt-2">
-                      <div className="text-lg font-semibold">QAR 69</div>
-                      <div className="text-sm line-through text-gray-400">
-                        QAR 189
+              {Object.values(shoesData)
+                .slice(0, 9)
+                .map((shoe, i) => (
+                  <Link
+                    key={i}
+                    className="bg-white border rounded-md overflow-hidden shadow-sm"
+                    to={`/productdetails/${shoe.id}`}
+                  >
+                    <div className="relative">
+                      <img
+                        src={shoe.imageURL}
+                        alt={shoe.id}
+                        className="w-full h-56 object-contain bg-white"
+                      />
+                      <button className="absolute top-3 right-3 bg-white rounded-full p-2 shadow">
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="p-3">
+                      <div className="text-sm text-gray-500">{shoe.name}</div>
+                      <div className="flex items-baseline gap-2 mt-2">
+                        <div className="text-lg font-semibold">
+                          QAR {shoe.price}
+                        </div>
+                        <div className="text-sm line-through text-gray-400">
+                          QAR 189
+                        </div>
+                        <div className="text-xs text-red-500">63% OFF</div>
                       </div>
-                      <div className="text-xs text-red-500">63% OFF</div>
+                      <div className="text-xs text-gray-500 mt-2">
+                        Available in 42, 43
+                      </div>
                     </div>
-                    <div className="text-xs text-gray-500 mt-2">
-                      Available in 42, 43
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  </Link>
+                ))}
             </div>
 
             {/* Pagination / list view switch */}

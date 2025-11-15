@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Backnavbar from "../components/common/Backnavbar";
+import { ShoeContext } from "../context/shoeContext";
+import { Link } from "react-router-dom";
+
 
 const AllCollection = () => {
+  const{shoesData}=useContext(ShoeContext)
   return (
     <div className="min-h-screen bg-white text-gray-800">
       {/* Top nav / breadcrumbs */}
@@ -188,15 +192,16 @@ const AllCollection = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div
+              {Object.values(shoesData).map((shoe,i) => (
+                <Link
                   key={i}
                   className="bg-white border rounded-md overflow-hidden shadow-sm"
+                  to={`/productdetails/${shoe.id}`}
                 >
                   <div className="relative">
                     <img
-                      src={`https://images.unsplash.com/photo-1519741492700-5bd1d2e3d7a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60&fm=jpg&crop=faces&sig=${i}`}
-                      alt="shoe"
+                      src={shoe.imageURL}
+                      alt={shoe.id}
                       className="w-full h-56 object-contain bg-white"
                     />
                     <button className="absolute top-3 right-3 bg-white rounded-full p-2 shadow">
@@ -216,9 +221,9 @@ const AllCollection = () => {
                     </button>
                   </div>
                   <div className="p-3">
-                    <div className="text-sm text-gray-500">Lee Cooper</div>
+                    <div className="text-sm text-gray-500">{shoe.name}</div>
                     <div className="flex items-baseline gap-2 mt-2">
-                      <div className="text-lg font-semibold">QAR 69</div>
+                      <div className="text-lg font-semibold">QAR {shoe.price}</div>
                       <div className="text-sm line-through text-gray-400">
                         QAR 189
                       </div>
@@ -228,7 +233,7 @@ const AllCollection = () => {
                       Available in 42, 43
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 

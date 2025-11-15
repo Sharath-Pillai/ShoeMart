@@ -15,6 +15,7 @@ import CartPage from "./pages/CartPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
+import { ShoeProvider } from "./context/shoeContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
         Component: MenshoePage,
       },
       {
-        path: "/productdetails",
+        path: "/productdetails/:id",
         Component: ProductPage,
       },
       {
@@ -75,5 +76,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <ShoeProvider>
+    <RouterProvider router={router} />
+  </ShoeProvider>
 );

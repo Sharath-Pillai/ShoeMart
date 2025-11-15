@@ -1,25 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import { Link } from "react-router";
+import { ShoeContext } from "../context/shoeContext";
+
 
 function Home() {
-  const [shoelist, setShoelist] = useState("");
-
-  useEffect(() => {
-    fetch("/shoeDetails.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network responce was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setShoelist(data);
-      })
-      .catch((error) => {
-        console.log("fetch error", error);
-      });
-  }, []);
+  const{shoesData}=useContext(ShoeContext)
+  
 
   return (
     <>
@@ -90,20 +76,21 @@ function Home() {
 
           } */}
 
-            {[1, 2, 3].map((i) => (
-              <div
+            {Object.values(shoesData).slice(0, 3).map((shoe, i) => (
+              <Link
                 key={i}
                 className="bg-white shadow rounded-lg p-4 text-center"
+                to={`/productdetails/${shoe.id}`}
               >
                 <img
-                  src="https://websitedemos.net/recycled-shoe-store-04/wp-content/uploads/sites/983/2021/11/recycled-shoe-product-image-006-600x600.jpg"
-                  alt={`shoe${i}`}
+                  src={shoe.imageURL}
+                  alt={`shoe${shoe.id}`}
                   className="w-full h-64 object-cover mb-4"
                 />
-                <h3 className="font-semibold mb-1">Product {i}</h3>
-                <p className="text-gray-500 mb-1">$99.99</p>
+                <h3 className="font-semibold mb-1">Product {shoe.id}</h3>
+                <p className="text-gray-500 mb-1">${shoe.price}</p>
                 <p className="text-yellow-500">★★★★☆</p>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
@@ -153,18 +140,18 @@ function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
+            {Object.values(shoesData).slice(3, 6).map((shoe, i) => (
               <div
                 key={i}
                 className="bg-white shadow rounded-lg p-4 text-center"
               >
                 <img
-                  src="https://websitedemos.net/recycled-shoe-store-04/wp-content/uploads/sites/983/2021/11/recycled-shoe-product-image-006-600x600.jpg"
-                  alt={`shoe${i}`}
+                  src={shoe.imageURL}
+                  alt={`shoe${shoe.id}`}
                   className="w-full h-64 object-cover mb-4"
                 />
-                <h3 className="font-semibold mb-1">Product {i}</h3>
-                <p className="text-gray-500 mb-1">$99.99</p>
+                <h3 className="font-semibold mb-1">Product {shoe.id}</h3>
+                <p className="text-gray-500 mb-1">${shoe.price}</p>
                 <p className="text-yellow-500">★★★★☆</p>
               </div>
             ))}
