@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router";
 const Header = () => {
   // const[search,setsearch]=useState('')
-  
 
-
-  const[shoes,setShoelist]=useState([])
+  const [shoes, setShoelist] = useState([]);
+  const [open, setOpen] = useState(false);
   const handleSearch = (e) => {
     const keyValue = e.target.value;
     console.log(keyValue);
@@ -19,7 +18,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center py-2 px-14 bg-white shadow-sm border-b">
+    <header className="flex justify-between items-center py-2 px-14 bg-white shadow-sm border-b relative">
       <div className="flex items-center gap-6">
         <div className="logo text-2xl font-bold text-orange-500">
           <Link to="/">SHOEMART</Link>
@@ -68,11 +67,29 @@ const Header = () => {
               />
             </Link>
 
-            <img
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAY1BMVEUAAAD///9fX19PT0/x8fF/f3/8/Pz5+fmtra15eXkeHh6IiIinp6fn5+fk5OTNzc0LCwvFxcVXV1dkZGSfn59JSUlqamrb29s3NzcjIyO4uLgXFxcpKSmVlZVzc3MvLy9BQUEnjlp0AAAEd0lEQVR4nO2c6XKjMAyAnWAgB4QjEBJyvv9Tblk2kwC20WFDd4bvf9tvwJZlSVSsuMgq2/j5+ZKml3Pub7JKsn+l4P14UG+9q+hw9bZ1MJ9UkGyFhm3C8WJIZUedUsMxm0EqKU1KDWUysZTcjyk17IlrniaV7CBOQuxoD4skVaQwJyHSYiKp0IcqNfjhJFI5xkmIfAKpcI1zEmKNflZoKWNwUnN0LQUKBX32bqU2FCchNi6lDjQnIQ7upELkxvuQoxY7SiqiOgkRuZKK6U5CxI6kSDvvDWYHIqQqjpMQlRMp1oNCPSq4lASnBmpSeHIFlyLGzQ/wCAqWCk9cqRM4VoGlWPGgBRwVwFIZXwp8vwFLPfhSD+tSN77UzbZUDLy/mNhBFxVUKmFGqYYUeuGCStV8JyFqy1KMrOUDNH+BSt1tSN0tSzFP4xbombxI2Zb6lWuqsCEFLcFApdjZVAM0o4JKWUgS4GnCf332BRe+1AVaxganLuiy1JA19G+BpSysdPDNASxFLrh8AJdewFLS4zp54Isf/N7HDp/w6jVcillKwBQTELUE5v4D7z2UVMKTQnREMPUp1tUPfOlDSrEeFaZ1hKp5opoyXXzM30FJHZ5UpyeqZo2ro5MTGFzvFtlxIL5A1MtDS+F7WA3YPha2YRQSkr0dtreGbq0d0DWhG64xQ5HC1xkxvQaq1CoenUj4xsM7kbrtmNWO79USpVYBuDAUkUZeiBMcCSgP9YiDJdRZlxCQiBaUV8eRasZdjCfhkzrowpL6CVmFVutZoIOTJam/Y13lIMTvSt5IF3v87WdxJbX/1e/O/TqhLiV7Uv+Qh6o68EcEW2xJWWWRgkKRknGVRfe7f/QMHP37PcqqmLLO8PnU5pG/xqP5m1f+2LjNp+L6RGpmpacalcBgru3+mWLUcvYdXNtlxK7E7iLo+oJJBcWLq9TwKmDHD0QqtNLsa4kgZxBAqiKPcqnIAbWzUSnJqGqo8UeX1phUxa6/DvHGHtaIlJU+0ZCRirpRKmAP3eg4GbehSUpaaH3oWJsWlkFKkktkEJ4GK73UgXGoQDjrz2mtFHfabRz9PJxOSqKqGDRKnZVGKnAQnoZ4mj2okbIextVoaqFqKYsnsBn1SI5Sit2wgqM8cVRSUyzyN8rFrpKaaEG1qJaVQorZQsOiyN2HUiHhew8Ox2EuOpSabOe9Ge7AgVRgYaATx20QQgdSVmaScAza8H0p+Zpe6tUPC30pR/mvmX523JdynESpOZulrMxu4cmMUlaGFPHsTVJy8njQcpMGqZneXv/9daWc3fPGOOmlgln2XsM50EpV1/Efd8O10krNEjlbNlqpSbO7Lr5Oiv6hI5/Op5LfUu4vxXo61+VvKQtfNtGJNVITJ+ddEo3UjJuvu/2+pWZIOj8UGqmZUoSWvUZK+79HpmCrkZrtOG44aaQc1l3HWS9Si9QitUgtUovUIrVILVKL1CL1X0j9yivWr6wlhBO2afuUuvrUKp5kGkFF95uRXnE/KmconKVlb67xD9XuPj0EmhyhAAAAAElFTkSuQmCC"
-              alt="user-icon"
-              className="w-6 h-6 cursor-pointer"
-            />
+            <div onMouseEnter={() => setOpen(true)}>
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAY1BMVEUAAAD///9fX19PT0/x8fF/f3/8/Pz5+fmtra15eXkeHh6IiIinp6fn5+fk5OTNzc0LCwvFxcVXV1dkZGSfn59JSUlqamrb29s3NzcjIyO4uLgXFxcpKSmVlZVzc3MvLy9BQUEnjlp0AAAEd0lEQVR4nO2c6XKjMAyAnWAgB4QjEBJyvv9Tblk2kwC20WFDd4bvf9tvwJZlSVSsuMgq2/j5+ZKml3Pub7JKsn+l4P14UG+9q+hw9bZ1MJ9UkGyFhm3C8WJIZUedUsMxm0EqKU1KDWUysZTcjyk17IlrniaV7CBOQuxoD4skVaQwJyHSYiKp0IcqNfjhJFI5xkmIfAKpcI1zEmKNflZoKWNwUnN0LQUKBX32bqU2FCchNi6lDjQnIQ7upELkxvuQoxY7SiqiOgkRuZKK6U5CxI6kSDvvDWYHIqQqjpMQlRMp1oNCPSq4lASnBmpSeHIFlyLGzQ/wCAqWCk9cqRM4VoGlWPGgBRwVwFIZXwp8vwFLPfhSD+tSN77UzbZUDLy/mNhBFxVUKmFGqYYUeuGCStV8JyFqy1KMrOUDNH+BSt1tSN0tSzFP4xbombxI2Zb6lWuqsCEFLcFApdjZVAM0o4JKWUgS4GnCf332BRe+1AVaxganLuiy1JA19G+BpSysdPDNASxFLrh8AJdewFLS4zp54Isf/N7HDp/w6jVcillKwBQTELUE5v4D7z2UVMKTQnREMPUp1tUPfOlDSrEeFaZ1hKp5opoyXXzM30FJHZ5UpyeqZo2ro5MTGFzvFtlxIL5A1MtDS+F7WA3YPha2YRQSkr0dtreGbq0d0DWhG64xQ5HC1xkxvQaq1CoenUj4xsM7kbrtmNWO79USpVYBuDAUkUZeiBMcCSgP9YiDJdRZlxCQiBaUV8eRasZdjCfhkzrowpL6CVmFVutZoIOTJam/Y13lIMTvSt5IF3v87WdxJbX/1e/O/TqhLiV7Uv+Qh6o68EcEW2xJWWWRgkKRknGVRfe7f/QMHP37PcqqmLLO8PnU5pG/xqP5m1f+2LjNp+L6RGpmpacalcBgru3+mWLUcvYdXNtlxK7E7iLo+oJJBcWLq9TwKmDHD0QqtNLsa4kgZxBAqiKPcqnIAbWzUSnJqGqo8UeX1phUxa6/DvHGHtaIlJU+0ZCRirpRKmAP3eg4GbehSUpaaH3oWJsWlkFKkktkEJ4GK73UgXGoQDjrz2mtFHfabRz9PJxOSqKqGDRKnZVGKnAQnoZ4mj2okbIextVoaqFqKYsnsBn1SI5Sit2wgqM8cVRSUyzyN8rFrpKaaEG1qJaVQorZQsOiyN2HUiHhew8Ox2EuOpSabOe9Ge7AgVRgYaATx20QQgdSVmaScAza8H0p+Zpe6tUPC30pR/mvmX523JdynESpOZulrMxu4cmMUlaGFPHsTVJy8njQcpMGqZneXv/9daWc3fPGOOmlgln2XsM50EpV1/Efd8O10krNEjlbNlqpSbO7Lr5Oiv6hI5/Op5LfUu4vxXo61+VvKQtfNtGJNVITJ+ddEo3UjJuvu/2+pWZIOj8UGqmZUoSWvUZK+79HpmCrkZrtOG44aaQc1l3HWS9Si9QitUgtUovUIrVILVKL1CL1X0j9yivWr6wlhBO2afuUuvrUKp5kGkFF95uRXnE/KmconKVlb67xD9XuPj0EmhyhAAAAAElFTkSuQmCC"
+                alt="user-icon"
+                className="w-6 h-6 cursor-pointer"
+              />
+              {open && (
+                <div
+                  className="absolute top-12 right-0 bg-white rounded-lg py-2.5 shadow-lg w-[100px] z-10 text-center"
+                  onMouseLeave={() => setOpen(false)}
+                >
+                  <div className="py-2.5 px-4 whitespace-nowrap cursor-pointer text-sm transition-colors duration-200 hover:bg-gray-100">
+                    Profile
+                  </div>
+                  <div className="py-2.5 px-4 whitespace-nowrap cursor-pointer text-sm transition-colors duration-200 hover:bg-gray-100">
+                    Settings
+                  </div>
+                  <Link to="/signin" className="py-2.5 px-4 whitespace-nowrap cursor-pointer text-sm transition-colors duration-200 hover:bg-gray-100">
+                    Sign In
+                  </Link>
+                </div>
+              )}
+            </div>
           </li>
         </ul>
       </nav>
