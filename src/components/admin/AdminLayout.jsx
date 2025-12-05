@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const AdminLayout = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -63,9 +63,14 @@ const AdminLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 overflow-y-auto">
-        <Outlet />
-      </main>
+      <div className="flex-1 flex flex-col">
+        <header className="bg-white shadow-sm py-4 px-8 border-b flex justify-end items-center">
+             <span className="text-gray-700 font-medium">Hi {user?.firstName || user?.username || "Admin"}</span>
+        </header>
+        <main className="flex-1 p-8 overflow-y-auto">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

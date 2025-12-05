@@ -40,7 +40,11 @@ const SignInPage = () => {
           }
           login(user);
           alert("SignIn successfully!");
-          navigate(from, { replace: true });
+          if (user.role === 'admin') {
+            navigate("/admin", { replace: true });
+          } else {
+            navigate(from, { replace: true });
+          }
         } else {
           setError({ general: "Invalid email or password" });
         }

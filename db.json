@@ -31,7 +31,7 @@
   ],
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Nike React Infinity Run Flyknit",
       "brand": "NIKE",
       "gender": "MEN",
@@ -44,7 +44,7 @@
       "featured": 0
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Nike React Miler",
       "brand": "NIKE",
       "gender": "MEN",
@@ -57,7 +57,7 @@
       "featured": 1
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Nike Air Zoom Pegasus 37",
       "brand": "NIKE",
       "gender": "WOMEN",
@@ -70,7 +70,7 @@
       "featured": 0
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Nike Joyride Run Flyknit",
       "brand": "NIKE",
       "gender": "WOMEN",
@@ -83,7 +83,7 @@
       "featured": 0
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Nike Mercurial Vapor 13 Elite FG",
       "brand": "NIKE",
       "gender": "WOMEN",
@@ -96,7 +96,7 @@
       "featured": 0
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Nike Phantom Vision Elite Dynamic Fit FG",
       "brand": "NIKE",
       "gender": "WOMEN",
@@ -109,7 +109,7 @@
       "featured": 0
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Nike Phantom Venom Academy FG",
       "brand": "NIKE",
       "gender": "WOMEN",
@@ -122,7 +122,7 @@
       "featured": 0
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Nike Mercurial Vapor 13 Elite Tech Craft FG",
       "brand": "NIKE",
       "gender": "MEN",
@@ -135,7 +135,7 @@
       "featured": 0
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Nike Mercurial Superfly 7 Pro MDS FG",
       "brand": "NIKE",
       "gender": "MEN",
@@ -148,7 +148,7 @@
       "featured": 0
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Nike Air Force 1",
       "brand": "NIKE",
       "gender": "KIDS",
@@ -161,7 +161,7 @@
       "featured": 0
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "Nike Air Max 90",
       "brand": "NIKE",
       "gender": "KIDS",
@@ -174,7 +174,7 @@
       "featured": 0
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "Nike Air Max 90 LTR",
       "brand": "NIKE",
       "gender": "KIDS",
@@ -187,7 +187,7 @@
       "featured": 0
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "Nike Joyride Dual Run",
       "brand": "NIKE",
       "gender": "KIDS",
@@ -200,7 +200,7 @@
       "featured": 0
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Nike Renew Run",
       "brand": "NIKE",
       "gender": "KIDS",
@@ -213,7 +213,7 @@
       "featured": 0
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Bridgport Advice",
       "brand": "HUSHPUPPIES",
       "gender": "MEN",
@@ -226,7 +226,7 @@
       "featured": 1
     },
     {
-      "id": 16,
+      "id": "16",
       "name": "Beck",
       "brand": "HUSHPUPPIES",
       "gender": "MEN",
@@ -239,7 +239,7 @@
       "featured": 0
     },
     {
-      "id": 17,
+      "id": "17",
       "name": "Fester",
       "brand": "HUSHPUPPIES",
       "gender": "MEN",
@@ -252,7 +252,7 @@
       "featured": 0
     },
     {
-      "id": 18,
+      "id": "18",
       "name": "Pixel",
       "brand": "HUSHPUPPIES",
       "gender": "MEN",
@@ -265,7 +265,7 @@
       "featured": 0
     },
     {
-      "id": 19,
+      "id": "19",
       "name": "Austin",
       "brand": "HUSHPUPPIES",
       "gender": "MEN",
@@ -278,7 +278,7 @@
       "featured": 0
     },
     {
-      "id": 20,
+      "id": "20",
       "name": "SS-HL-0135",
       "brand": "HUSHPUPPIES",
       "gender": "WOMEN",
@@ -291,7 +291,7 @@
       "featured": 0
     },
     {
-      "id": 21,
+      "id": "21",
       "name": "SS-HL-0136",
       "brand": "HUSHPUPPIES",
       "gender": "WOMEN",
@@ -304,7 +304,7 @@
       "featured": 0
     },
     {
-      "id": 22,
+      "id": "22",
       "name": "SS-HL-0128",
       "brand": "HUSHPUPPIES",
       "gender": "WOMEN",
@@ -317,7 +317,7 @@
       "featured": 0
     },
     {
-      "id": 23,
+      "id": "23",
       "name": "SS-MS-0075",
       "brand": "HUSHPUPPIES",
       "gender": "WOMEN",
@@ -330,7 +330,7 @@
       "featured": 0
     },
     {
-      "id": 24,
+      "id": "24",
       "name": "Club C Revenge Mens",
       "brand": "Reebok",
       "gender": "MEN",
@@ -343,7 +343,7 @@
       "featured": 0
     },
     {
-      "id": 25,
+      "id": "25",
       "name": "SS-PM-0093",
       "brand": "HUSHPUPPIES",
       "gender": "WOMEN",
@@ -356,7 +356,7 @@
       "featured": 0
     },
     {
-      "id": 26,
+      "id": "26",
       "name": "Nizza X Disney",
       "brand": "ADIDAS",
       "gender": "KIDS",
@@ -369,7 +369,7 @@
       "featured": 0
     },
     {
-      "id": 27,
+      "id": "27",
       "name": "X_PLR",
       "brand": "ADIDAS",
       "gender": "KIDS",
@@ -382,7 +382,7 @@
       "featured": 1
     },
     {
-      "id": 28,
+      "id": "28",
       "name": "Stan Smith",
       "brand": "ADIDAS",
       "gender": "KIDS",
@@ -395,7 +395,7 @@
       "featured": 0
     },
     {
-      "id": 29,
+      "id": "29",
       "name": "NMD_R1",
       "brand": "ADIDAS",
       "gender": "KIDS",
@@ -408,7 +408,7 @@
       "featured": 0
     },
     {
-      "id": 30,
+      "id": "30",
       "name": "NMD_R1 Flash Red",
       "brand": "ADIDAS",
       "gender": "WOMEN",
@@ -421,7 +421,7 @@
       "featured": 0
     },
     {
-      "id": 31,
+      "id": "31",
       "name": "Superstar",
       "brand": "ADIDAS",
       "gender": "WOMEN",
@@ -434,7 +434,7 @@
       "featured": 0
     },
     {
-      "id": 32,
+      "id": "32",
       "name": "Club C Revenge Mens",
       "brand": "Reebok",
       "gender": "MEN",
@@ -447,7 +447,7 @@
       "featured": 0
     },
     {
-      "id": 33,
+      "id": "33",
       "name": "SK80-Low",
       "brand": "Vans",
       "gender": "MEN",
@@ -460,7 +460,7 @@
       "featured": 0
     },
     {
-      "id": 34,
+      "id": "34",
       "name": "Michael Feburary SK8-Hi",
       "brand": "Vans",
       "gender": "MEN",
@@ -474,18 +474,6 @@
     }
   ],
   "cart": [
-    {
-      "id": "2d2e",
-      "userId": null,
-      "productId": 28,
-      "productName": "Stan Smith",
-      "productPrice": 55,
-      "productImage": "https://assets.adidas.com/images/h_320,f_auto,q_auto:sensitive,fl_lossy/d0720712d81e42b1b30fa80800826447_9366/Stan_Smith_Shoes_White_M20607_M20607_01_standard.jpg",
-      "productBrand": "ADIDAS",
-      "color": "Classic White",
-      "size": "42",
-      "quantity": 1
-    },
     {
       "id": "e024",
       "userId": null,

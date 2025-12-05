@@ -27,6 +27,7 @@ import AdminLayout from "./components/admin/AdminLayout.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AdminProducts from "./pages/admin/AdminProducts.jsx";
 import AdminUsers from "./pages/admin/AdminUsers.jsx";
+import OrderHistoryPage from "./pages/OrderHistoryPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -107,6 +108,11 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         Component: ProfilePage,
+        handle: { showHeader: true },
+      },
+      {
+        path: "/orders",
+        Component: OrderHistoryPage,
         handle: { showHeader: true },
       },
     ],

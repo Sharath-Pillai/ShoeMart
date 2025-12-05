@@ -158,6 +158,13 @@ const Header = () => {
                       >
                         Profile
                       </Link>
+                      <Link
+                        to="/orders"
+                        className="block py-2.5 px-4 whitespace-nowrap cursor-pointer text-sm transition-colors duration-200 hover:bg-gray-100 text-gray-600 hover:text-black"
+                        onClick={() => setOpen(false)}
+                      >
+                        Order History
+                      </Link>
                       <button
                         onClick={handleLogout}
                         className="w-full  py-2.5 px-4 whitespace-nowrap cursor-pointer text-sm transition-colors duration-200 hover:bg-gray-100 text-red-500 hover:text-red-700"
