@@ -1,10 +1,11 @@
 import React from "react";
+import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Toppromobar = () => {
+  const { user, logout } = useAuth();
+
   return (
-    // <p className="bg-gray-100 text-center text-xs py-2 text-gray-400">
-    //   Free Express Shipping on all orders with all duties included
-    // </p>
     <div className="border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-2 text-sm text-gray-600">
@@ -13,9 +14,14 @@ const Toppromobar = () => {
               <span className="flex items-center gap-2">Click & Collect</span>
               <span className="flex items-center gap-2">Home Delivery</span>
             </div>
-            <div className="text-right">
+            <div className="text-right flex items-center gap-4">
               <span className="mr-4">Deliver to <strong>Alappuzha</strong></span>
-              <span className="text-yellow-500">Hi, Sharath</span>
+              {user ? (
+                <div className="flex items-center gap-2">
+                   <span className="text-yellow-600 font-semibold">Hi, {user.firstName || user.username}</span>
+                   {user.role === 'admin' && <Link to="/admin" className="text-blue-600 hover:underline">Admin Panel</Link>}
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
-import React from "react";
-import {Link} from "react-router"
+import { Link } from "react-router-dom";
+
 const Backnavbar = () => {
   return (
     <header className="bg-white border-b border-red-200">

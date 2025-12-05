@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouteError } from "react-router";
+import { useRouteError } from "react-router-dom";
 import Backnavbar from "../components/common/Backnavbar";
 const Error = () => {
   const errorData = useRouteError();

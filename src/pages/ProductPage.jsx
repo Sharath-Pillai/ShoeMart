@@ -1,19 +1,101 @@
-import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useMemo, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { ShoeContext } from "../context/shoeContext";
+import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 import InnerPageBack from "../components/common/InnerPageBack";
 
 const ProductPage = () => {
   const { id } = useParams();
-  const { shoesData } = useContext(ShoeContext);
-  const product = Object.values(shoesData).find((item) => item.id == id);
+  const { shoes, isLoading, toggleWishlist, isInWishlist } =
+    useContext(ShoeContext);
+  const { addToCart } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const product = useMemo(
+    () => shoes.find((item) => item.id === Number(id)),
+    [shoes, id]
+  );
+  const colorOptions = ["Classic White", "Jet Black", "Sunburst Orange"];
+  const sizeOptions = ["40 2/3", "42", "43 1/3", "44", "44 2/3", "46"];
+  const extraImages = useMemo(
+    () => [
+      product?.imageURL,
+      "https://images.unsplash.com/photo-1475180098004-ca77a66827be?auto=format&fit=crop&w=600&q=60",
+      "https://images.unsplash.com/photo-1528702748617-c64d49f918af?auto=format&fit=crop&w=600&q=60",
+      "https://images.unsplash.com/photo-1508963493744-76fce69379c0?auto=format&fit=crop&w=600&q=60",
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=60",
+    ],
+    [product?.imageURL]
+  );
+  const maxQuantity = product?.items_left || 6;
+  const [selectedColor, setSelectedColor] = useState(colorOptions[0]);
+  const [selectedSize, setSelectedSize] = useState(sizeOptions[1]);
+  const [quantity, setQuantity] = useState(1);
+  const [actionMessage, setActionMessage] = useState("");
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [detailsExpanded, setDetailsExpanded] = useState(false);
+  const loved = product ? isInWishlist?.(product.id) : false;
+
+  const handleQuantityChange = (direction) => {
+    setQuantity((prev) => {
+      if (direction === "decrease") {
+        return Math.max(1, prev - 1);
+      }
+      return Math.min(maxQuantity, prev + 1);
+    });
+  };
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      navigate("/signin", { state: { from: location } });
+      return;
+    }
+    await addToCart(product, quantity, selectedColor, selectedSize);
+    setActionMessage(
+      `${quantity} × ${product.name} (${selectedSize}, ${selectedColor}) added to your bag.`
+    );
+  };
+
+  const handleBuyNow = async () => {
+    if (!user) {
+      navigate("/signin", { state: { from: location } });
+      return;
+    }
+    await addToCart(product, quantity, selectedColor, selectedSize);
+    navigate("/cart");
+  };
+
+  const handleWishlistToggle = () => {
+    toggleWishlist?.(product.id);
+    setActionMessage(
+      loved
+        ? "Removed from your wishlist."
+        : "Saved to wishlist. Check it out later!"
+    );
+  };
+
+  if (!product && isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-600">
+        Loading product details...
+      </div>
+    );
+  }
+
   if (!product) {
-    return <h2>Loading.....</h2>;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-600">
+        Product not found.
+      </div>
+    );
   }
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
       {/* Top nav / breadcrumbs */}
-      <InnerPageBack/>
+      <InnerPageBack />
       <div className="max-w-7xl mx-auto p-6">
         {/* Breadcrumb */}
         <nav className="text-xs text-gray-500 mb-4">Home / {product.gender.toLowerCase()} / Shoes</nav>
@@ -24,7 +106,7 @@ const ProductPage = () => {
             <div className="bg-white rounded shadow-sm p-6">
               <div className="w-full bg-gray-100 rounded-md flex items-center justify-center h-[420px]">
                 <img
-                  src={product.imageURL}
+                  src={extraImages[activeImageIndex]}
                   alt="shoe"
                   className="max-h-full max-w-full object-contain"
                 />
@@ -51,17 +133,23 @@ const ProductPage = () => {
 
               {/* Thumbnail images */}
               <div className="mt-4 grid grid-cols-5 gap-3">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div
-                    key={i}
-                    className="h-20 w-full bg-white rounded border flex items-center justify-center"
+                {extraImages.map((src, index) => (
+                  <button
+                    key={src}
+                    className={`h-20 w-full rounded border flex items-center justify-center bg-white transition ${
+                      activeImageIndex === index
+                        ? "border-cyan-500 shadow"
+                        : "border-transparent hover:border-gray-200"
+                    }`}
+                    onClick={() => setActiveImageIndex(index)}
+                    aria-label={`View image ${index + 1}`}
                   >
                     <img
-                      src={product.imageURL}
-                      alt={`thumb-${i}`}
+                      src={src}
+                      alt={`thumb-${index + 1}`}
                       className="h-16 object-contain"
                     />
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -70,9 +158,10 @@ const ProductPage = () => {
           {/* Center column - Details */}
           <div className="lg:col-span-7">
             <div className="bg-white rounded shadow-sm p-6">
-              <h1 className="text-lg font-semibold">
-                {product.name}
-              </h1>
+              <h1 className="text-lg font-semibold">{product.name}</h1>
+              <p className="mt-1 text-sm text-gray-500 uppercase tracking-[0.3em]">
+                {product.brand} • {product.category}
+              </p>
 
               <div className="mt-3">
                 <div className="flex flex-wrap items-baseline gap-3">
@@ -87,9 +176,30 @@ const ProductPage = () => {
                 <div className="text-xs text-gray-500 mt-2">
                   Save QAR 106 • Earn 25 Shukrans
                 </div>
-                <div className="mt-2 text-xs text-orange-600 bg-orange-50 inline-block px-3 py-1 rounded">
+              <div className="mt-2 text-xs text-orange-600 bg-orange-50 inline-block px-3 py-1 rounded">
                   Added to cart 5 times in the last 24 hours
                 </div>
+              <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-400">
+                <button
+                  type="button"
+                  onClick={handleWishlistToggle}
+                  className="flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition hover:text-red-500"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className={`h-4 w-4 ${loved ? "fill-red-500 stroke-red-500" : "stroke-current"}`}
+                    fill={loved ? "currentColor" : "none"}
+                    strokeWidth="1.6"
+                  >
+                    <path d="M12 20.5l-1.45-1.32C5.4 15.36 2 12.28 2 8.5A4.5 4.5 0 016.5 4 5 5 0 0112 6.09 5 5 0 0117.5 4 4.5 4.5 0 0122 8.5c0 3.78-3.4 6.86-8.55 10.68L12 20.5z" />
+                  </svg>
+                  {loved ? "Wishlisted" : "Add to Wishlist"}
+                </button>
+                <button className="rounded-full border border-gray-200 px-4 py-2 font-semibold text-gray-600 transition hover:border-gray-400">
+                  Share
+                </button>
+              </div>
               </div>
 
               {/* Divider line */}
@@ -98,19 +208,18 @@ const ProductPage = () => {
               {/* Colour section */}
               <div className="mt-2">
                 <div className="text-sm text-gray-600 mb-2">Colour</div>
-                <div className="flex gap-3 flex-wrap">
-                  {[1, 2, 3].map((i, idx) => (
+                <div className="flex gap-2 flex-wrap">
+                  {colorOptions.map((color) => (
                     <button
-                      key={i}
-                      className={`w-12 h-12 border rounded p-1 ${
-                        idx === 2 ? "border-2 border-cyan-300" : ""
+                      key={color}
+                      onClick={() => setSelectedColor(color)}
+                      className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition ${
+                        selectedColor === color
+                          ? "border-cyan-500 bg-cyan-50 text-cyan-700"
+                          : "border-gray-200 text-gray-600 hover:border-gray-400"
                       }`}
                     >
-                      <img
-                        src={product.imageURL}
-                        alt={`c${i}`}
-                        className="h-full object-contain"
-                      />
+                      {color}
                     </button>
                   ))}
                 </div>
@@ -127,19 +236,24 @@ const ProductPage = () => {
                   </div>
                 </div>
 
-                <div className="mt-3 grid grid-cols-6 gap-2">
-                  {["40 2/3", "42", "43 1/3", "44", "44 2/3", "46"].map(
-                    (s, idx) => (
+                <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
+                  {sizeOptions.map((size) => {
+                    const disabled = ["44 2/3", "46"].includes(size);
+                    return (
                       <button
-                        key={idx}
-                        className={`text-sm py-2 rounded border ${
-                          idx === 1 ? "bg-cyan-50 border-cyan-300" : ""
-                        } ${idx > 2 ? "opacity-50 cursor-not-allowed" : ""}`}
+                        key={size}
+                        onClick={() => !disabled && setSelectedSize(size)}
+                        disabled={disabled}
+                        className={`text-sm py-2 rounded border transition ${
+                          selectedSize === size
+                            ? "border-cyan-500 bg-cyan-50 text-cyan-700"
+                            : "border-gray-200 text-gray-600 hover:border-gray-400"
+                        } ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
                       >
-                        {s}
+                        {size}
                       </button>
-                    )
-                  )}
+                    );
+                  })}
                 </div>
               </div>
 
@@ -148,7 +262,12 @@ const ProductPage = () => {
                 <div className="text-sm text-gray-600">Quantity</div>
                 <div className="mt-2 flex items-center gap-3">
                   <div className="flex items-center border rounded overflow-hidden">
-                    <button className="px-3 py-2" aria-label="decrease">
+                    <button
+                      className="px-3 py-2"
+                      aria-label="decrease"
+                      onClick={() => handleQuantityChange("decrease")}
+                      disabled={quantity === 1}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5"
@@ -162,12 +281,15 @@ const ProductPage = () => {
                         />
                       </svg>
                     </button>
-                    <input
-                      className="w-16 text-center py-2 outline-none"
-                      defaultValue={1}
-                      readOnly
-                    />
-                    <button className="px-3 py-2" aria-label="increase">
+                    <div className="w-16 text-center text-sm font-semibold">
+                      {quantity}
+                    </div>
+                    <button
+                      className="px-3 py-2"
+                      aria-label="increase"
+                      onClick={() => handleQuantityChange("increase")}
+                      disabled={quantity === maxQuantity}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5"
@@ -192,13 +314,25 @@ const ProductPage = () => {
 
               {/* Buttons */}
               <div className="mt-6 flex flex-col sm:flex-row items-center gap-3">
-                <button className="flex-1 bg-cyan-600 text-white py-3 rounded shadow w-full">
-                  Add to Basket
+                <button
+                  className="flex-1 bg-cyan-600 text-white py-3 rounded shadow w-full"
+                  onClick={handleAddToCart}
+                >
+                  Add to Cart
                 </button>
-                <button className="bg-black text-white py-3 px-6 rounded w-full sm:w-auto">
+                <button
+                  className="bg-black text-white py-3 px-6 rounded w-full sm:w-auto"
+                  onClick={handleBuyNow}
+                >
                   Buy Now
                 </button>
               </div>
+
+              {actionMessage && (
+                <div className="mt-4 rounded-xl border border-cyan-100 bg-cyan-50 px-4 py-3 text-sm text-cyan-800">
+                  {actionMessage}
+                </div>
+              )}
 
               {/* Payment and Delivery info */}
               <div className="mt-4 text-sm text-gray-500">
@@ -236,47 +370,63 @@ const ProductPage = () => {
 
             {/* Product Details */}
             <div className="bg-white rounded shadow-sm p-6 mt-6">
-              <h3 className="font-semibold mb-3">Product Details</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold">Product Details</h3>
+                <button
+                  type="button"
+                  onClick={() => setDetailsExpanded((prev) => !prev)}
+                  className="flex items-center gap-2 text-sm font-semibold text-cyan-600"
+                >
+                  {detailsExpanded ? "Hide Full Details" : "See Full Details"}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    className={`h-4 w-4 transition-transform ${
+                      detailsExpanded ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+              <p className="mt-3 text-sm text-gray-600 leading-relaxed">
                 These adidas sneakers bring a ’70s vibe to your everyday look.
                 The lightweight upper is lined for comfort while Cloudfoam
                 cushioning keeps you powering through your routine.
               </p>
 
-              {/* Material & General Specifications side-by-side */}
-              <div className="mt-6 grid md:grid-cols-1 gap-6">
-                {/* Material */}
-                <div className="flex-1">
-                  <div className="text-sm font-medium text-gray-700 mb-2">
-                    Material
+              {detailsExpanded && (
+                <div className="mt-6 space-y-6">
+                  <div>
+                    <div className="text-sm font-medium text-gray-700 mb-2">
+                      Material
+                    </div>
+                    <div className="border rounded overflow-hidden text-sm text-gray-600">
+                      <div className="bg-gray-100 p-3">Upper Material</div>
+                      <div className="p-3">Leather and Textile</div>
+                      <div className="bg-gray-100 p-3">Sole Material</div>
+                      <div className="p-3">Rubber</div>
+                    </div>
                   </div>
-                  <div className="border rounded overflow-hidden text-sm text-gray-600">
-                    <div className="bg-gray-100 p-3">Upper Material</div>
-                    <div className="p-3">Leather and Textile</div>
-                    <div className="bg-gray-100 p-3">Sole Material</div>
-                    <div className="p-3">Rubber</div>
+
+                  <div>
+                    <div className="text-sm font-medium text-gray-700 mb-2">
+                      General Specifications
+                    </div>
+                    <div className="border rounded overflow-hidden text-sm text-gray-600">
+                      <div className="bg-gray-100 p-3">Brand Product Name</div>
+                      <div className="p-3">RUN 70s 2.0 Shoes</div>
+                      <div className="bg-gray-100 p-3">Occasion</div>
+                      <div className="p-3">Casual</div>
+                      <div className="bg-gray-100 p-3">Pattern</div>
+                      <div className="p-3">Logo</div>
+                    </div>
                   </div>
                 </div>
-
-                {/* General Specifications */}
-                <div className="flex-1">
-                  <div className="text-sm font-medium text-gray-700 mb-2">
-                    General Specifications
-                  </div>
-                  <div className="border rounded overflow-hidden text-sm text-gray-600">
-                    <div className="bg-gray-100 p-3">Brand Product Name</div>
-                    <div className="p-3">RUN 70s 2.0 Shoes</div>
-                    <div className="bg-gray-100 p-3">Occasion</div>
-                    <div className="p-3">Casual</div>
-                    <div className="bg-gray-100 p-3">Pattern</div>
-                    <div className="p-3">Logo</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 text-cyan-600 text-sm cursor-pointer">
-                See Full Details ▾
-              </div>
+              )}
             </div>
           </div>
         </div>

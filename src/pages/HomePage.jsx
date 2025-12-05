@@ -1,11 +1,12 @@
-import { useEffect, useState,useContext } from "react";
-import { Link } from "react-router";
+import { useContext, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { ShoeContext } from "../context/shoeContext";
-
+import ProductCard from "../components/product/ProductCard";
 
 function Home() {
-  const{shoesData}=useContext(ShoeContext)
-  
+  const { shoes, isLoading } = useContext(ShoeContext);
+  const bestSellers = useMemo(() => shoes.slice(0, 3), [shoes]);
+  const newArrivals = useMemo(() => shoes.slice(3, 6), [shoes]);
 
   return (
     <>
@@ -69,30 +70,22 @@ function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* {shoelist.map((shoes,index)=>{
-
-          })
-
-          } */}
-
-            {Object.values(shoesData).slice(0, 3).map((shoe, i) => (
-              <Link
-                key={i}
-                className="bg-white shadow rounded-lg p-4 text-center"
-                to={`/productdetails/${shoe.id}`}
-              >
-                <img
-                  src={shoe.imageURL}
-                  alt={`shoe${shoe.id}`}
-                  className="w-full h-64 object-cover mb-4"
+          {isLoading ? (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {[1, 2, 3].map((index) => (
+                <div
+                  key={index}
+                  className="h-72 animate-pulse rounded-2xl bg-gray-100"
                 />
-                <h3 className="font-semibold mb-1">Product {shoe.id}</h3>
-                <p className="text-gray-500 mb-1">${shoe.price}</p>
-                <p className="text-yellow-500">★★★★☆</p>
-              </Link>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {bestSellers.map((shoe) => (
+                <ProductCard key={shoe.id} product={shoe} />
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Double Banner Section shop men & women */}
@@ -139,23 +132,22 @@ function Home() {
               View All New Arrivals
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {Object.values(shoesData).slice(3, 6).map((shoe, i) => (
-              <div
-                key={i}
-                className="bg-white shadow rounded-lg p-4 text-center"
-              >
-                <img
-                  src={shoe.imageURL}
-                  alt={`shoe${shoe.id}`}
-                  className="w-full h-64 object-cover mb-4"
+          {isLoading ? (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {[1, 2, 3].map((index) => (
+                <div
+                  key={index}
+                  className="h-72 animate-pulse rounded-2xl bg-gray-100"
                 />
-                <h3 className="font-semibold mb-1">Product {shoe.id}</h3>
-                <p className="text-gray-500 mb-1">${shoe.price}</p>
-                <p className="text-yellow-500">★★★★☆</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {newArrivals.map((shoe) => (
+                <ProductCard key={shoe.id} product={shoe} />
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </>

@@ -1,7 +1,95 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setshowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [isHuman, setIsHuman] = useState(false);
+  const [error, setError] = useState({});
+  const navigate = useNavigate();
+
+  const signUpHandler = async () => {
+    let newError = {};
+    //firstanme validation
+    if (firstName === "") {
+      newError.firstName = "First Name is required";
+    }
+    //lastname validation
+    if (lastName === "") {
+      newError.lastName = "Last Name is required";
+    }
+    // email validation
+    if (email === "") {
+      newError.email = "Email is required";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      newError.email = "Email is invalid";
+    }
+
+    // password validation
+    if (password === "") {
+      newError.password = "Password is Required";
+    } else if (password.length < 8) {
+      newError.password = "Password must be at least 8 characters";
+    }
+
+    // confirm password validation
+    if (confirmPassword === "") {
+      newError.confirmPassword = "Confirm Password is Required";
+    } else if (password !== confirmPassword) {
+      newError.confirmPassword = "Passwords do not match";
+    }
+    //moble number validation
+    if (mobileNumber === "") {
+      newError.mobileNumber = "Mobile Number is Required";
+    } 
+    //iam not robot validation
+    if (!isHuman) {
+      newError.isHuman = "Please verify that you are not a robot";
+    }
+
+    setError(newError);
+
+    if (Object.keys(newError).length === 0) {
+      try {
+        // Check if user already exists
+        const checkRes = await fetch(`http://localhost:3000/users?email=${email}`);
+        const existingUsers = await checkRes.json();
+
+        if (existingUsers.length > 0) {
+          setError({ email: "Email already registered" });
+          return;
+        }
+
+        const newUser = {
+          firstName,
+          lastName,
+          email,
+          password, // In a real app, hash this!
+          mobileNumber,
+          role: "user",
+          active: true
+        };
+
+        await fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newUser),
+        });
+
+        alert("SignUp successfully! Please sign in.");
+        navigate("/signin");
+      } catch (err) {
+        console.error(err);
+        alert("Signup failed. Please try again.");
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="max-w-lg bg-white shadow-lg rounded-2xl p-8 ">
@@ -38,7 +126,11 @@ const SignupPage = () => {
                 type="text"
                 placeholder="Enter your first name"
                 className="border border-gray-300  p-2 w-full rounded-sm"
+                onChange={(e) => setFirstName(e.target.value)}
               />
+              {error.firstName && (
+                <p className="text-sm text-red-400">{error.firstName}</p>
+              )}
             </div>
 
             <div>
@@ -49,7 +141,11 @@ const SignupPage = () => {
                 type="text"
                 placeholder="Enter your last name"
                 className="border border-gray-300  p-2 w-full rounded-sm"
+                onChange={(e) => setLastName(e.target.value)}
               />
+              {error.lastName && (
+                <p className="text-sm text-red-400">{error.lastName}</p>
+              )}
             </div>
           </div>
           <div className="mt-4">
@@ -57,10 +153,15 @@ const SignupPage = () => {
               E-mail
             </label>
             <input
+              value={email}
               type="email"
               placeholder="Enter your email"
               className="border border-gray-300  p-2 w-full  rounded-sm"
+              onChange={(e) => setEmail(e.target.value)}
             />
+            {error.email && (
+              <p className="text-sm text-red-400">{error.email}</p>
+            )}
           </div>
 
           <div className="mt-4">
@@ -69,45 +170,32 @@ const SignupPage = () => {
             </label>
             <div className="relative">
               <input
-                type="password"
+                value={password}
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 className="border border-gray-300  p-2 w-full  rounded-sm"
+                onChange={(e) => setPassword(e.target.value)}
               />
+              {error.password && (
+                <p className="text-sm text-red-400">{error.password}</p>
+              )}
               {/* Eye icon (visible) */}
-              <div className="absolute right-3 top-2.5 text-gray-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
+              {showPassword ? (
+                <div
+                  onClick={() => setshowPassword(!showPassword)}
+                  className="absolute right-2 top-0.5 cursor-pointer w-9 h-9"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </div>
-              {/* eye closed icon  */}
-              <div className="absolute right-3 top-2.5 text-gray-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 3l18 18M10.477 10.477A3 3 0 0112 9c.828 0 1.578.336 2.121.879M9.88 9.879A3 3 0 0012 15c.828 0 1.578-.336 2.121-.879M2.458 12C3.732 7.943 7.523 5 12 5c1.794 0 3.465.479 4.9 1.318M19.542 17.683C18.147 19.02 15.842 20 12 20c-4.477 0-8.268-2.943-9.542-7"
-                  />
-                </svg>
-              </div>
+                  <img src="/show-password.png" alt="show" />
+                </div>
+              ) : (
+                <div 
+                  onClick={() => setshowPassword(!showPassword)}
+                  className="absolute right-3 top-1.5 cursor-pointer w-7 h-7">
+                  {" "}
+                  {/* eye closed icon  */}
+                  <img src="/hide-password.png" alt="hide" />
+                </div>
+              )}
             </div>
           </div>
 
@@ -117,45 +205,15 @@ const SignupPage = () => {
             </label>
             <div className="relative">
               <input
+                value={confirmPassword}
                 type="password"
                 placeholder="Confirm your password"
                 className="border border-gray-300  p-2 w-full  rounded-sm"
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              {/* Eye icon (visible) */}
-              <div className="absolute right-3 top-2.5 text-gray-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </div>
-              {/* eye closed icon  */}
-              <div className="absolute right-3 top-2.5 text-gray-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 3l18 18M10.477 10.477A3 3 0 0112 9c.828 0 1.578.336 2.121.879M9.88 9.879A3 3 0 0012 15c.828 0 1.578-.336 2.121-.879M2.458 12C3.732 7.943 7.523 5 12 5c1.794 0 3.465.479 4.9 1.318M19.542 17.683C18.147 19.02 15.842 20 12 20c-4.477 0-8.268-2.943-9.542-7"
-                  />
-                </svg>
-              </div>
+              {error.confirmPassword && (
+                <p className="text-sm text-red-400">{error.confirmPassword}</p>
+              )}
             </div>
           </div>
 
@@ -168,22 +226,35 @@ const SignupPage = () => {
             </label>
             <div className="flex">
               <input
+                value={mobileNumber}
                 type="text"
                 placeholder="+974 77XXXXXX"
                 className="border border-gray-300 rounded-l-sm p-2 grow"
+                onChange={(e) => setMobileNumber(e.target.value)}
               />
               <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 rounded-r-sm transition-colors duration-300">
                 Verify
               </button>
             </div>
+            {error.mobileNumber && (
+              <p className="text-sm text-red-400">{error.mobileNumber}</p>
+            )}
           </div>
 
           <div className="flex items-center mt-4">
-            <input type="checkbox" id="recaptcha" className="mr-2" />
+            <input
+              type="checkbox"
+              id="recaptcha"
+              className="mr-2"
+              onChange={(e) => setIsHuman(e.target.checked)}
+            />
             <label htmlFor="recaptcha" className="text-sm text-gray-600">
               I'm not a robot
             </label>
           </div>
+          {error.isHuman && (
+            <p className="text-sm text-red-400">{error.isHuman}</p>
+          )}
           <div className="mt-4">
             <label className="text-sm font-semibold ">
               Date of Birth{" "}
@@ -233,7 +304,10 @@ const SignupPage = () => {
             </label>
           </div>
 
-          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-sm mt-6 transition-colors duration-300">
+          <button
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-sm mt-6 transition-colors duration-300"
+            onClick={signUpHandler}
+          >
             Sign Up
           </button>
 
@@ -254,7 +328,10 @@ const SignupPage = () => {
             <hr className="border-gray-200 w-[22%]" />
           </div>
 
-          <Link to="/signin" className="w-full bg-white-600 border-violet-300 border-2 hover:bg-blue-700 hover:border-white hover:text-white font-medium py-2 rounded-sm mt-6 transition-colors duration-300">
+          <Link
+            to="/signin"
+            className="w-full inline-block text-center bg-white-600 border-violet-300 border-2 hover:bg-blue-700 hover:border-white hover:text-white font-medium py-2 rounded-sm mt-6 transition-colors duration-300"
+          >
             Sign In Now
           </Link>
         </div>
