@@ -24,7 +24,7 @@ const ShoeProvider = ({ children }) => {
     const fetchShoes = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("/shoeDetails.json");
+        const response = await fetch("http://localhost:3000/products");
         if (!response.ok) {
           throw new Error("We couldn't load the catalog right now.");
         }
