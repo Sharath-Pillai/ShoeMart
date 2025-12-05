@@ -15,7 +15,7 @@ const ProductPage = () => {
   const location = useLocation();
 
   const product = useMemo(
-    () => shoes.find((item) => item.id === Number(id)),
+    () => shoes.find((item) => String(item.id) === String(id)),
     [shoes, id]
   );
   const colorOptions = ["Classic White", "Jet Black", "Sunburst Orange"];

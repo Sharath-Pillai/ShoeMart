@@ -39,7 +39,7 @@ export const CartProvider = ({ children }) => {
       // Check if item already exists
       const existingItem = cartItems.find(
         (item) =>
-          item.productId === product.id &&
+          String(item.productId) === String(product.id) &&
           item.color === selectedColor &&
           item.size === selectedSize
       );

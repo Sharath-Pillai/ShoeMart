@@ -22,9 +22,9 @@ const AdminProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:3000/shoes");
+      const res = await fetch("http://localhost:3000/products");
       const data = await res.json();
-      setProducts(data.filter(p => p.is_active !== false));
+      setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -53,8 +53,8 @@ const AdminProducts = () => {
       }
 
       const url = isEditing
-        ? `http://localhost:3000/shoes/${currentProduct.id}`
-        : "http://localhost:3000/shoes";
+        ? `http://localhost:3000/products/${currentProduct.id}`
+        : "http://localhost:3000/products";
       const method = isEditing ? "PATCH" : "POST";
 
       const body = { ...formData };
@@ -90,10 +90,8 @@ const AdminProducts = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      await fetch(`http://localhost:3000/shoes/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ is_active: false }),
+      await fetch(`http://localhost:3000/products/${id}`, {
+        method: "DELETE",
       });
       fetchProducts();
     } catch (error) {

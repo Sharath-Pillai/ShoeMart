@@ -13,7 +13,7 @@ const AdminDashboard = () => {
       try {
         const [ordersRes, productsRes, usersRes] = await Promise.all([
           fetch("http://localhost:3000/orders"),
-          fetch("http://localhost:3000/shoes"),
+          fetch("http://localhost:3000/products"),
           fetch("http://localhost:3000/users"),
         ]);
 

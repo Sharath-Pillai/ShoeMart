@@ -454,10 +454,11 @@
       "category": "CASUAL",
       "price": 60,
       "is_in_inventory": true,
-      "items_left": 3,
+      "items_left": "1",
       "imageURL": "https://images.vans.com/is/image/Vans/UUK24I-HERO?$583x583$",
       "slug": "sk80-low",
-      "featured": 0
+      "featured": 0,
+      "is_active": false
     },
     {
       "id": "34",
@@ -471,6 +472,19 @@
       "imageURL": "https://images.vans.com/is/image/Vans/MV122M-HERO?$583x583$",
       "slug": "michael-feburary-sk8-hi",
       "featured": 0
+    },
+    {
+      "id": "bfaa",
+      "name": "woodland",
+      "brand": "woodland",
+      "gender": "MEN",
+      "category": "CASUAL",
+      "price": 250,
+      "is_in_inventory": true,
+      "items_left": 10,
+      "imageURL": "https://assets.myntassets.com/h_1440,q_75,w_1080/v1/assets/images/6995113/2018/8/14/491e41a2-77ba-4bf5-86af-aeb8f67d63be1534240854106-Woodland-Men-Casual-Shoes-3381534240853938-1.jpg",
+      "slug": "",
+      "is_active": true
     }
   ],
   "cart": [
@@ -493,6 +507,18 @@
       "productName": "Nike React Infinity Run Flyknit",
       "productPrice": 160,
       "productImage": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-665455a5-45de-40fb-945f-c1852b82400d/react-infinity-run-flyknit-mens-running-shoe-zX42Nc.jpg",
+      "productBrand": "NIKE",
+      "color": "Classic White",
+      "size": "42",
+      "quantity": 1
+    },
+    {
+      "id": "4ef6",
+      "userId": "e5e2",
+      "productId": "3",
+      "productName": "Nike Air Zoom Pegasus 37",
+      "productPrice": 120,
+      "productImage": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-33b0a0a5-c171-46cc-ad20-04a768703e47/air-zoom-pegasus-37-womens-running-shoe-Jl0bDf.jpg",
       "productBrand": "NIKE",
       "color": "Classic White",
       "size": "42",

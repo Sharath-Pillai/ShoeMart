@@ -68,7 +68,7 @@ const ShoeProvider = ({ children }) => {
     const map = new Map();
     shoes.forEach((item) => {
       if (item?.id != null) {
-        map.set(Number(item.id), item);
+        map.set(String(item.id), item);
       }
     });
     return map;
@@ -81,7 +81,7 @@ const ShoeProvider = ({ children }) => {
 
   const toggleWishlist = (productId) => {
     setWishlistIds((prev) => {
-      const normalizedId = Number(productId);
+      const normalizedId = String(productId);
       if (prev.includes(normalizedId)) {
         return prev.filter((id) => id !== normalizedId);
       }
@@ -90,13 +90,13 @@ const ShoeProvider = ({ children }) => {
   };
 
   const removeFromWishlist = (productId) => {
-    setWishlistIds((prev) => prev.filter((id) => id !== Number(productId)));
+    setWishlistIds((prev) => prev.filter((id) => id !== String(productId)));
   };
 
   const clearWishlist = () => setWishlistIds([]);
 
   const isInWishlist = (productId) =>
-    wishlistIds.includes(Number(productId ?? -1));
+    wishlistIds.includes(String(productId ?? -1));
 
   return (
     <ShoeContext.Provider
