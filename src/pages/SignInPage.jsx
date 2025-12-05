@@ -120,44 +120,17 @@ const SignInPage = () => {
               {showPassword ? (
                 <div
                   onClick={() => setshowPassword(!showPassword)}
-                  className="absolute right-3 top-2.5 text-gray-500 cursor-pointer"
+                  className="absolute right-2 top-0.5 cursor-pointer w-9 h-9"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
+                  <img src="/show-password.png" alt="show" />
                 </div>
               ) : (
                 <div 
                   onClick={() => setshowPassword(!showPassword)}
-                  className="absolute right-3 top-2.5 text-gray-500 cursor-pointer">
+                  className="absolute right-3 top-1.5 cursor-pointer w-7 h-7">
                   {" "}
                   {/* eye closed icon  */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3 3l18 18M10.477 10.477A3 3 0 0112 9c.828 0 1.578.336 2.121.879M9.88 9.879A3 3 0 0012 15c.828 0 1.578-.336 2.121-.879M2.458 12C3.732 7.943 7.523 5 12 5c1.794 0 3.465.479 4.9 1.318M19.542 17.683C18.147 19.02 15.842 20 12 20c-4.477 0-8.268-2.943-9.542-7"
-                    />
-                  </svg>
+                  <img src="/hide-password.png" alt="hide" />
                 </div>
               )}
             </div>
