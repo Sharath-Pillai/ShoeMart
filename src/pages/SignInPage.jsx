@@ -40,7 +40,7 @@ const SignInPage = () => {
           }
           login(user);
           alert("SignIn successfully!");
-          if (user.role === 'admin') {
+          if (user.role === 'admin' || user.role === 'super-admin') {
             navigate("/admin", { replace: true });
           } else {
             navigate(from, { replace: true });

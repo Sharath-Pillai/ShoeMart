@@ -19,7 +19,7 @@ const Toppromobar = () => {
               {user ? (
                 <div className="flex items-center gap-2">
                    <span className="text-yellow-600 font-semibold">Hi, {user.firstName || user.username}</span>
-                   {user.role === 'admin' && <Link to="/admin" className="text-blue-600 hover:underline">Admin Panel</Link>}
+                   {(user.role === 'admin' || user.role === 'super-admin') && <Link to="/admin" className="text-blue-600 hover:underline">Admin Panel</Link>}
                 </div>
               ) : null}
             </div>

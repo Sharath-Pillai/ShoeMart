@@ -4,7 +4,7 @@
       "id": "1",
       "username": "admin",
       "password": "adminpassword",
-      "role": "admin",
+      "role": "super-admin",
       "email": "admin@shoemart.com",
       "active": true
     },
@@ -37,6 +37,17 @@
       "password": "Qwerty@123",
       "mobileNumber": "30587887",
       "role": "user",
+      "active": true
+    },
+    {
+      "id": "a98yey2p1",
+      "username": "pillai",
+      "email": "pillai@gmail.com",
+      "password": "pillai@123",
+      "firstName": "pillai",
+      "lastName": "pillai",
+      "mobileNumber": "12345679",
+      "role": "admin",
       "active": true
     }
   ],
