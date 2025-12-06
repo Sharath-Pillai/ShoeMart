@@ -31,7 +31,8 @@ const CheckoutPage = () => {
     try {
       // Build order
       const order = {
-        userId: user.id,
+        userId: user.id, // Keeping userId for backward compatibility if needed, or strictly switching to email.
+        userEmail: user.email, // Link order to email for persistence across account deletions
         items: cartItems.map(item => ({
           productId: item.productId,
           productName: item.productName,
@@ -42,7 +43,7 @@ const CheckoutPage = () => {
           size: item.size
         })),
         total: total,
-        date: new Date().toLocaleString(),
+        date: new Date().toISOString(), // Use ISO string for better sorting/formatting later
         status: "Order Placed"
       };
 

@@ -13,9 +13,12 @@ function App() {
   const showHeader = currentRoute?.handle?.showHeader ?? true;
   const showFooter = currentRoute?.handle?.showHeader ?? true; // Assuming same logic for now as per requirement "when this page open no need headers and footers"
 
+  const hidePromoBarRoutes = ["/signin", "/signup"];
+  const shouldShowPromoBar = !hidePromoBarRoutes.includes(location.pathname.toLowerCase());
+
   return (
     <>
-      <Toppromobar />
+      {shouldShowPromoBar && <Toppromobar />}
       {showHeader && <Header />}
       <Outlet />
       {showFooter && <Footer />}

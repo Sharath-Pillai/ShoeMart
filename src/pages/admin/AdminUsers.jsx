@@ -33,6 +33,19 @@ const AdminUsers = () => {
   const deleteUser = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
+      // 1. Fetch user's cart items
+      const cartRes = await fetch(`http://localhost:3000/cart?userId=${id}`);
+      const cartItems = await cartRes.json();
+      const userCartItems = cartItems.filter(item => String(item.userId) === String(id));
+
+      // 2. Delete all cart items
+      await Promise.all(
+        userCartItems.map((item) =>
+          fetch(`http://localhost:3000/cart/${item.id}`, { method: "DELETE" })
+        )
+      );
+
+      // 3. Delete user
       await fetch(`http://localhost:3000/users/${id}`, {
         method: "DELETE",
       });

@@ -8,11 +8,9 @@ const OrderHistoryPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user?.id) {
-      // Assuming db.json structure has "orders" and we can filter by userId if supported by mock server
-      // If not supported, we might need to fetch all and filter client side, but let's try direct filter first
-      // Based on typical json-server behavior: /orders?userId=1
-      fetch(`http://localhost:3000/orders?userId=${user.id}`)
+    if (user?.email) {
+      // Fetch orders by email to persist history even if account is re-created
+      fetch(`http://localhost:3000/orders?userEmail=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           setOrders(data);

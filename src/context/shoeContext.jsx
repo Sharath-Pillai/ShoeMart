@@ -1,23 +1,36 @@
-import { createContext, useEffect, useMemo, useState } from "react";
+import { useAuth } from "./AuthContext";
+import { createContext, useState, useEffect, useMemo } from "react";
+const BASE_STORAGE_KEY = "shoemart:wishlist";
 
-const STORAGE_KEY = "shoemart:wishlist";
 const ShoeContext = createContext();
 
 const ShoeProvider = ({ children }) => {
+  const { user } = useAuth();
   const [shoesData, setShoesData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [wishlistIds, setWishlistIds] = useState(() => {
-    if (typeof window === "undefined") {
-      return [];
+
+  // Derive the storage key based on the current user
+  const storageKey = useMemo(() => {
+    if (user?.id) {
+      return `${BASE_STORAGE_KEY}:${user.id}`;
     }
+    return `${BASE_STORAGE_KEY}:guest`;
+  }, [user]);
+
+  const [wishlistIds, setWishlistIds] = useState([]);
+
+  // Load wishlist when storageKey changes (user logs in/out)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
     try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      return stored ? JSON.parse(stored) : [];
+      const stored = window.localStorage.getItem(storageKey);
+      setWishlistIds(stored ? JSON.parse(stored) : []);
     } catch {
-      return [];
+      setWishlistIds([]);
     }
-  });
+  }, [storageKey]);
 
   useEffect(() => {
     let isMounted = true;
@@ -51,16 +64,15 @@ const ShoeProvider = ({ children }) => {
     };
   }, []);
 
+  // Save wishlist whenever it changes
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
+    if (typeof window === "undefined") return;
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(wishlistIds));
+      window.localStorage.setItem(storageKey, JSON.stringify(wishlistIds));
     } catch {
       // ignore storage errors
     }
-  }, [wishlistIds]);
+  }, [wishlistIds, storageKey]);
 
   const shoes = useMemo(() => Object.values(shoesData || {}), [shoesData]);
 

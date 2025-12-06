@@ -28,6 +28,37 @@ const ProfilePage = () => {
     navigate('/');
   };
 
+  const handleDeleteAccount = async () => {
+    if (!window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) return;
+    
+    try {
+      // 1. Fetch user's cart items
+      const cartRes = await fetch(`http://localhost:3000/cart?userId=${user.id}`);
+      const cartItems = await cartRes.json();
+      const userCartItems = cartItems.filter(item => String(item.userId) === String(user.id));
+
+      // 2. Delete all cart items
+      await Promise.all(
+        userCartItems.map((item) =>
+          fetch(`http://localhost:3000/cart/${item.id}`, { method: "DELETE" })
+        )
+      );
+
+      // 3. Delete user
+      await fetch(`http://localhost:3000/users/${user.id}`, {
+        method: "DELETE",
+      });
+
+      // 4. Logout
+      logout();
+      alert("Your account has been deleted.");
+      navigate('/');
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      alert("Failed to delete account. Please try again.");
+    }
+  };
+
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -86,11 +117,17 @@ const ProfilePage = () => {
             </div>
 
             <div className="mt-8 border-t border-gray-200 pt-6 flex justify-end">
-               <button
+              <button
                 onClick={handleLogout}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
               >
                 Sign Out
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                className="ml-4 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none"
+              >
+                Delete Account
               </button>
             </div>
           </div>

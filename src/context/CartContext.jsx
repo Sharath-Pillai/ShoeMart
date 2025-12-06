@@ -24,7 +24,9 @@ export const CartProvider = ({ children }) => {
       setIsLoading(true);
       const res = await fetch(`http://localhost:3000/cart?userId=${user.id}`);
       const data = await res.json();
-      setCartItems(data);
+      // Filter strictly by userId to avoid json-server returning mismatched items
+      const userCart = data.filter((item) => String(item.userId) === String(user.id));
+      setCartItems(userCart);
     } catch (error) {
       console.error("Error fetching cart:", error);
     } finally {

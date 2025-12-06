@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("session");
     localStorage.removeItem("cart");
-    localStorage.removeItem("wishlist");
+    // Wishlist remains in local storage, isolated by user ID
     setUser(null);
   };
 

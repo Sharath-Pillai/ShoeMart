@@ -7,6 +7,7 @@ const AdminDashboard = () => {
     totalProducts: 0,
     totalUsers: 0,
   });
+  const [recentOrders, setRecentOrders] = useState([]);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -29,6 +30,10 @@ const AdminDashboard = () => {
           totalProducts: products.length,
           totalUsers: users.length,
         });
+
+        // Get last 5 orders and reverse them to show newest first
+        const sortedOrders = [...orders].reverse().slice(0, 5);
+        setRecentOrders(sortedOrders);
       } catch (error) {
         console.error("Error fetching stats:", error);
       }
@@ -64,7 +69,44 @@ const AdminDashboard = () => {
 
       <div className="mt-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h3>
-        <p className="text-gray-500 text-sm">No recent activity to show.</p>
+        {recentOrders.length === 0 ? (
+          <p className="text-gray-500 text-sm">No recent orders found.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-gray-100 text-sm text-gray-500 uppercase">
+                  <th className="py-3 px-2">Order ID</th>
+                  <th className="py-3 px-2">User Email</th>
+                  <th className="py-3 px-2">Date</th>
+                  <th className="py-3 px-2">Amount</th>
+                  <th className="py-3 px-2">Status</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm text-gray-700">
+                {recentOrders.map((order) => (
+                  <tr key={order.id} className="border-b border-gray-50 hover:bg-gray-50">
+                    <td className="py-3 px-2 font-medium bg-gray-50/50">#{order.id}</td>
+                    <td className="py-3 px-2">{order.userEmail || "N/A"}</td>
+                    <td className="py-3 px-2">
+                      {order.date ? new Date(order.date).toLocaleDateString() : "-"}
+                    </td>
+                    <td className="py-3 px-2 font-semibold">QAR {order.total}</td>
+                    <td className="py-3 px-2">
+                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                        order.status === 'Delivered' ? 'bg-green-100 text-green-700' :
+                        order.status === 'Cancelled' ? 'bg-red-100 text-red-700' :
+                        'bg-blue-100 text-blue-700'
+                      }`}>
+                        {order.status || "Placed"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
