@@ -8,9 +8,8 @@ import AdminDashboard from "./pages/AdminDashboard.jsx";
 import AdminProducts from "./pages/AdminProducts.jsx";
 import AdminUsers from "./pages/AdminUsers.jsx";
 import AdminOrders from "./pages/AdminOrders.jsx";
-import { AuthProvider } from "../../frontend/src/context/AuthContext.jsx";
-
-import SignInPage from "../../frontend/src/pages/SignInPage.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import AdminSignInPage from "./pages/AdminSignInPage.jsx";
 import { Navigate } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -20,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/signin",
-    element: <SignInPage />,
+    element: <AdminSignInPage />,
   },
   {
     path: "/admin",
@@ -44,5 +43,5 @@ createRoot(document.getElementById("root")).render(
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
-  </StrictMode>
+  </StrictMode>,
 );

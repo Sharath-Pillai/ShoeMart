@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../../frontend/src/context/AuthContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 /* ── Skeleton stat card ──────────────────────────────────────────────────── */
 const SkeletonStatCard = () => (
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
         const revenue = ordersList.reduce(
           (acc, order) =>
             acc + (order.totalPrice || order.amount || order.total || 0),
-          0
+          0,
         );
 
         setStats({
@@ -118,13 +118,16 @@ const AdminDashboard = () => {
             password: newAdmin.password,
             invitationCode: newAdmin.invitationCode,
           }),
-        }
+        },
       );
 
       const data = await response.json();
 
       if (response.ok && data.success) {
-        setCreateMessage({ type: "success", text: "New admin created successfully!" });
+        setCreateMessage({
+          type: "success",
+          text: "New admin created successfully!",
+        });
         setNewAdmin({
           username: "",
           email: "",
@@ -188,7 +191,9 @@ const AdminDashboard = () => {
                 Welcome back, {user.name}! 👋
               </h1>
               <p className="text-orange-100 text-lg">
-                {user.role === "super-admin" ? "Super Administrator" : "Administrator"}{" "}
+                {user.role === "super-admin"
+                  ? "Super Administrator"
+                  : "Administrator"}{" "}
                 • Logged in as {user.email}
               </p>
             </div>
@@ -199,12 +204,16 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Overview</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">
+        Dashboard Overview
+      </h2>
 
       {/* ── Stat Cards ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statsLoading
-          ? Array.from({ length: 4 }).map((_, i) => <SkeletonStatCard key={i} />)
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <SkeletonStatCard key={i} />
+            ))
           : statCards.map((card) => (
               <div
                 key={card.label}
@@ -252,15 +261,74 @@ const AdminDashboard = () => {
             onSubmit={handleCreateAdminSubmit}
             className="grid grid-cols-1 md:grid-cols-2 gap-5"
           >
-            <input type="text" name="firstName" placeholder="First Name" value={newAdmin.firstName} onChange={handleCreateAdminChange} required className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors" />
-            <input type="text" name="lastName" placeholder="Last Name" value={newAdmin.lastName} onChange={handleCreateAdminChange} required className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors" />
-            <input type="text" name="username" placeholder="Username" value={newAdmin.username} onChange={handleCreateAdminChange} required className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors" />
-            <input type="email" name="email" placeholder="Email" value={newAdmin.email} onChange={handleCreateAdminChange} required className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors" />
-            <input type="tel" name="mobileNumber" placeholder="Mobile Number" value={newAdmin.mobileNumber} onChange={handleCreateAdminChange} required className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors" />
-            <input type="password" name="password" placeholder="Password" value={newAdmin.password} onChange={handleCreateAdminChange} required className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors" />
-            <input type="text" name="invitationCode" placeholder="Admin Invitation Code" value={newAdmin.invitationCode} onChange={handleCreateAdminChange} required className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors" />
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              value={newAdmin.firstName}
+              onChange={handleCreateAdminChange}
+              required
+              className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors"
+            />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              value={newAdmin.lastName}
+              onChange={handleCreateAdminChange}
+              required
+              className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors"
+            />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={newAdmin.username}
+              onChange={handleCreateAdminChange}
+              required
+              className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={newAdmin.email}
+              onChange={handleCreateAdminChange}
+              required
+              className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors"
+            />
+            <input
+              type="tel"
+              name="mobileNumber"
+              placeholder="Mobile Number"
+              value={newAdmin.mobileNumber}
+              onChange={handleCreateAdminChange}
+              required
+              className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={newAdmin.password}
+              onChange={handleCreateAdminChange}
+              required
+              className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors"
+            />
+            <input
+              type="text"
+              name="invitationCode"
+              placeholder="Admin Invitation Code"
+              value={newAdmin.invitationCode}
+              onChange={handleCreateAdminChange}
+              required
+              className="p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors"
+            />
             <div className="md:col-span-2 pt-2">
-              <button type="submit" className="bg-cyan-600 text-white font-bold tracking-wide px-8 py-3 rounded-xl hover:bg-cyan-700 transition shadow-lg shadow-cyan-600/30">
+              <button
+                type="submit"
+                className="bg-cyan-600 text-white font-bold tracking-wide px-8 py-3 rounded-xl hover:bg-cyan-700 transition shadow-lg shadow-cyan-600/30"
+              >
                 Create Admin
               </button>
             </div>
@@ -270,7 +338,9 @@ const AdminDashboard = () => {
 
       {/* ── Recent Orders ────────────────────────────────────────────────── */}
       <div className="mt-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h3>
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+          Recent Activity
+        </h3>
 
         {statsLoading ? (
           <table className="w-full text-left border-collapse">
@@ -307,7 +377,9 @@ const AdminDashboard = () => {
                       {order.userId?.email || order.userEmail || "N/A"}
                     </td>
                     <td className="py-3 px-2">
-                      {order.date ? new Date(order.date).toLocaleDateString() : "-"}
+                      {order.date
+                        ? new Date(order.date).toLocaleDateString()
+                        : "-"}
                     </td>
                     <td className="py-3 px-2 font-semibold">
                       QAR {order.amount || order.total}
@@ -318,8 +390,8 @@ const AdminDashboard = () => {
                           order.status === "Delivered"
                             ? "bg-green-100 text-green-700"
                             : order.status === "Cancelled"
-                            ? "bg-red-100 text-red-700"
-                            : "bg-blue-100 text-blue-700"
+                              ? "bg-red-100 text-red-700"
+                              : "bg-blue-100 text-blue-700"
                         }`}
                       >
                         {order.status || "Placed"}
