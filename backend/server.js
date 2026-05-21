@@ -23,10 +23,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173", // frontend (Vite)
-      "http://localhost:3000", // admin panel (Vite)
-    ],
+    origin:
+      process.env.NODE_ENV === "production"
+        ? [
+            process.env.FRONTEND_URL || "https://your-frontend.vercel.app",
+            process.env.ADMIN_URL || "https://your-admin.vercel.app",
+          ]
+        : [
+            "http://localhost:5173", // frontend (Vite)
+            "http://localhost:3000", // admin panel (Vite)
+          ],
     credentials: true,
   }),
 );
@@ -58,6 +64,10 @@ app.use((err, req, res, next) => {
 });
 
 // ── Start Server ──────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
