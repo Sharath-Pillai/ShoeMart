@@ -9,7 +9,7 @@ const AdminRoute = () => {
   }
   console.log(user);
   if (!user || (user.role !== "admin" && user.role !== "super-admin")) {
-    window.location.href = "http://localhost:5173/admin/signin";
+    window.location.href = "https://shoe-mart-frontend.vercel.app/admin/signin";
     return null;
   }
 
