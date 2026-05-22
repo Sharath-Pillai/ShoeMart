@@ -31,13 +31,16 @@ const AdminSignInPage = () => {
         setLoading(true);
 
         // Use admin login endpoint
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/admin/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/user/admin/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
           },
-          body: JSON.stringify({ email, password })
-        });
+        );
 
         const data = await response.json();
 
@@ -51,13 +54,13 @@ const AdminSignInPage = () => {
 
           // Login user
           login(user);
-       
+
           alert("Admin Sign In successful!");
 
           // Redirect to admin dashboard with user data in URL params
           const userParam = encodeURIComponent(JSON.stringify(user));
           const tokenParam = encodeURIComponent(token);
-          window.location.href = `http://localhost:3000/admin?user=${userParam}&token=${tokenParam}`;
+          window.location.href = `https://shoe-mart-admin.vercel.app/admin?user=${userParam}&token=${tokenParam}`;
         } else {
           setError({ general: data.message || "Invalid email or password" });
         }
