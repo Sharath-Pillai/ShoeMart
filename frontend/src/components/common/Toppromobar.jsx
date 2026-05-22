@@ -38,11 +38,7 @@ const Toppromobar = () => {
                 <span className="text-yellow-600 font-semibold">
                   Hi, {user.name}
                 </span>
-                {(user.role === "admin" || user.role === "super-admin") && (
-                  <Link to="/admin" className="text-blue-600 hover:underline">
-                    Admin Panel
-                  </Link>
-                )}
+                +++++++++++++++++++++++++++++++++++++++++++++++
               </div>
             ) : null}
           </div>
