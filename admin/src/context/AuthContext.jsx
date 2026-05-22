@@ -7,40 +7,75 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // Synchronously initialize the user state to avoid race conditions with routing
+  const [user, setUser] = useState(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const userParam = params.get("user");
+      const tokenParam = params.get("token");
+
+      if (userParam && tokenParam) {
+        try {
+          // Robustly decode and parse the user data
+          let userData;
+          try {
+            userData = JSON.parse(userParam);
+          } catch (e) {
+            userData = JSON.parse(decodeURIComponent(userParam));
+          }
+          localStorage.setItem("user", JSON.stringify(userData));
+          localStorage.setItem("token", tokenParam);
+          return userData;
+        } catch (err) {
+          console.error("Failed to parse user from URL parameters:", err);
+        }
+      }
+
+      // Fallback to localStorage if no URL params are present
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        try {
+          return JSON.parse(storedUser);
+        } catch (err) {
+          console.error("Failed to parse stored user from localStorage:", err);
+        }
+      }
+    }
+    return null;
+  });
+
+  // Synchronously initialize loading state
+  const [loading, setLoading] = useState(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const userParam = params.get("user");
+      const tokenParam = params.get("token");
+      if (userParam && tokenParam) {
+        return false;
+      }
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        return false;
+      }
+    }
+    return false;
+  });
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const userParam = params.get("user");
-    const tokenParam = params.get("token");
+    // Clean the URL query parameters after successful extraction to keep it clean
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const userParam = params.get("user");
+      const tokenParam = params.get("token");
 
-    if (userParam && tokenParam) {
-      try {
-        const userData = JSON.parse(userParam);
-        localStorage.setItem("user", JSON.stringify(userData));
-        localStorage.setItem("token", tokenParam);
-
-        // Clean the URL
+      if (userParam && tokenParam) {
         window.history.replaceState(
           {},
           document.title,
-          window.location.pathname,
+          window.location.pathname
         );
-
-        setUser(userData);
-        setLoading(false);
-        return;
-      } catch (err) {
-        console.error("Failed to parse user from URL", err);
       }
     }
-
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
   }, []);
 
   const login = (userData) => {
@@ -60,3 +95,4 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+

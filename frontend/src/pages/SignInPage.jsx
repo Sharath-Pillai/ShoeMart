@@ -61,7 +61,7 @@ const SignInPage = () => {
           if (user.role === "admin") {
             const userParam = encodeURIComponent(JSON.stringify(user));
             const tokenParam = encodeURIComponent(token);
-            window.location.href = `https://shoe-mart-admin.vercel.app/admin?user=${userParam}&token=${tokenParam}`;
+            window.location.href = `https://shoe-mart-admin.vercel.app/?user=${userParam}&token=${tokenParam}`;
           } else {
             navigate(from, { replace: true });
           }

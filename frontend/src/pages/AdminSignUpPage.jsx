@@ -87,7 +87,7 @@ const AdminSignUpPage = () => {
             alert("Admin account created successfully!");
             const userParam = encodeURIComponent(JSON.stringify(user));
             const tokenParam = encodeURIComponent(token);
-            window.location.href = `https://shoe-mart-admin.vercel.app/admin?user=${userParam}&token=${tokenParam}`;
+            window.location.href = `https://shoe-mart-admin.vercel.app/?user=${userParam}&token=${tokenParam}`;
           }, 1500);
         } else {
           setError({ general: data.message || "Failed to create admin account" });

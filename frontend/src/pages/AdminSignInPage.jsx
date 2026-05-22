@@ -60,7 +60,7 @@ const AdminSignInPage = () => {
           // Redirect to admin dashboard with user data in URL params
           const userParam = encodeURIComponent(JSON.stringify(user));
           const tokenParam = encodeURIComponent(token);
-          window.location.href = `https://shoe-mart-admin.vercel.app/admin?user=${userParam}&token=${tokenParam}`;
+          window.location.href = `https://shoe-mart-admin.vercel.app/?user=${userParam}&token=${tokenParam}`;
         } else {
           setError({ general: data.message || "Invalid email or password" });
         }
