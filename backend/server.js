@@ -26,8 +26,8 @@ app.use(
     origin:
       process.env.NODE_ENV === "production"
         ? [
-            process.env.FRONTEND_URL || "https://shoe-mart-frontend.vercel.app/",
-            process.env.ADMIN_URL || "https://shoe-mart-admin.vercel.app/",
+            process.env.FRONTEND_URL || "https://shoe-mart-frontend.vercel.app",
+            process.env.ADMIN_URL || "https://shoe-mart-admin.vercel.app",
           ]
         : [
             "http://localhost:5173", // frontend (Vite)
