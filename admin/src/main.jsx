@@ -9,7 +9,7 @@ import AdminProducts from "./pages/AdminProducts.jsx";
 import AdminUsers from "./pages/AdminUsers.jsx";
 import AdminOrders from "./pages/AdminOrders.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
-import AdminSignInPage from "../../frontend/src/pages/AdminSignInPage.jsx";
+import AdminSignInPage from "./pages/AdminSignInPage.jsx";
 import { Navigate } from "react-router-dom";
 
 const router = createBrowserRouter([
