@@ -29,7 +29,9 @@ const AdminProducts = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/product`);
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/product`,
+      );
       const data = await res.json();
       setProducts(Array.isArray(data.products) ? data.products : []);
     } catch (error) {
@@ -52,7 +54,7 @@ const AdminProducts = () => {
     try {
       if (!isEditing) {
         const duplicate = products.find(
-          (p) => p.name.toLowerCase() === formData.name.toLowerCase()
+          (p) => p.name.toLowerCase() === formData.name.toLowerCase(),
         );
         if (duplicate) {
           alert("A product with this name already exists.");
@@ -80,7 +82,11 @@ const AdminProducts = () => {
       });
 
       if (res.ok) {
-        alert(isEditing ? "Product updated successfully!" : "Product added successfully!");
+        alert(
+          isEditing
+            ? "Product updated successfully!"
+            : "Product added successfully!",
+        );
         fetchProducts();
         resetForm();
       } else {
@@ -100,7 +106,8 @@ const AdminProducts = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    if (!window.confirm("Are you sure you want to delete this product?"))
+      return;
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
@@ -108,7 +115,7 @@ const AdminProducts = () => {
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
 
       if (res.ok) {
@@ -144,14 +151,19 @@ const AdminProducts = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Product Management</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">
+        Product Management
+      </h2>
 
       {/* ── Add / Edit Form ─────────────────────────────────────────────── */}
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
         <h3 className="text-lg font-semibold mb-4">
           {isEditing ? "Edit Product" : "Add New Product"}
         </h3>
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           <input
             type="text"
             name="name"
@@ -240,7 +252,10 @@ const AdminProducts = () => {
             </label>
             <div className="flex flex-wrap gap-2">
               {["5", "6", "7", "8", "9", "10", "11", "12", "13"].map((size) => (
-                <label key={size} className="flex items-center gap-2 cursor-pointer">
+                <label
+                  key={size}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
                   <input
                     type="checkbox"
                     value={size}
@@ -325,7 +340,10 @@ const AdminProducts = () => {
                   {/* text cells */}
                   {[70, 55, 40, 50].map((w, j) => (
                     <td key={j} className="px-6 py-4">
-                      <div className="h-4 rounded bg-gray-200" style={{ width: `${w}%` }} />
+                      <div
+                        className="h-4 rounded bg-gray-200"
+                        style={{ width: `${w}%` }}
+                      />
                     </td>
                   ))}
                   {/* actions cell */}
@@ -345,16 +363,29 @@ const AdminProducts = () => {
               </tr>
             ) : (
               products.map((product) => (
-                <tr key={product._id} className="hover:bg-gray-50 transition-colors">
+                <tr
+                  key={product._id}
+                  className="hover:bg-gray-50 transition-colors"
+                >
                   <td className="px-6 py-4">
                     <img
-                      src={product.image}
+                      // src={product.image}
+                      // alt={product.name}
+                      // className="h-10 w-10 rounded object-cover bg-gray-100"
+                      // loading="lazy"
+                      src={
+                        Array.isArray(product.image)
+                          ? product.image[0]
+                          : product.image
+                      }
                       alt={product.name}
                       className="h-10 w-10 rounded object-cover bg-gray-100"
                       loading="lazy"
                     />
                   </td>
-                  <td className="px-6 py-4 font-medium text-gray-900">{product.name}</td>
+                  <td className="px-6 py-4 font-medium text-gray-900">
+                    {product.name}
+                  </td>
                   <td className="px-6 py-4">{product.brand}</td>
                   <td className="px-6 py-4">QAR {product.price}</td>
                   <td className="px-6 py-4">
