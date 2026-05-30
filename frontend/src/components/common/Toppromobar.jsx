@@ -38,7 +38,7 @@ const Toppromobar = () => {
                 <span className="text-yellow-600 font-semibold">
                   Hi, {user.name}
                 </span>
-                +++++++++++++++++++++++++++++++++++++++++++++++
+       
               </div>
             ) : null}
           </div>
