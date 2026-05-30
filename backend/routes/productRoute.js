@@ -19,15 +19,10 @@ productRouter.get("/:id", getSingleProduct);
 productRouter.post(
   "/add",
   authAdmin,
-  upload.array("images", 5),   // up to 5 images per product
-  addProduct
+  upload.array("image", 5), // up to 5 images per product
+  addProduct,
 );
-productRouter.put(
-  "/:id",
-  authAdmin,
-  upload.array("images", 5),
-  updateProduct
-);
+productRouter.put("/:id", authAdmin, upload.array("image", 5), updateProduct);
 productRouter.delete("/:id", authAdmin, removeProduct);
 
 export default productRouter;

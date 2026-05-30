@@ -14,9 +14,10 @@ export const addProduct = async (req, res) => {
       sizes,
       bestseller,
       stock,
-      imageURL,
+      image: imageURL,
       gender,
     } = req.body;
+    console.log(imageURL);
 
     let imageUrls = [];
 
