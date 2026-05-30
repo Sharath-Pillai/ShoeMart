@@ -4,6 +4,19 @@ import productModel from "../models/productModel.js";
 // ─── Add Product ──────────────────────────────────────────────────────────────
 export const addProduct = async (req, res) => {
   try {
+    // const {
+    //   name,
+    //   brand,
+    //   description,
+    //   price,
+    //   category,
+    //   subcategory,
+    //   sizes,
+    //   bestseller,
+    //   stock,
+    //   image: imageURL,
+    //   gender,
+    // } = req.body;
     const {
       name,
       brand,
@@ -13,7 +26,7 @@ export const addProduct = async (req, res) => {
       subcategory,
       sizes,
       bestseller,
-      stock,
+      items_left,
       image: imageURL,
       gender,
     } = req.body;
@@ -46,6 +59,23 @@ export const addProduct = async (req, res) => {
       });
     }
 
+    console.log("sizes:", sizes);
+    console.log("type:", typeof sizes);
+
+    // const product = new productModel({
+    //   name,
+    //   brand,
+    //   description,
+    //   price: Number(price),
+    //   image: imageUrls,
+    //   category,
+    //   subcategory,
+    //   sizes: sizes ? JSON.parse(sizes) : [],
+    //   bestseller: bestseller === "true",
+    //   stock: stock ? Number(stock) : 100,
+    //   gender: gender || "MEN",
+    //   date: Date.now(),
+    // });
     const product = new productModel({
       name,
       brand,
@@ -54,12 +84,15 @@ export const addProduct = async (req, res) => {
       image: imageUrls,
       category,
       subcategory,
-      sizes: sizes ? JSON.parse(sizes) : [],
-      bestseller: bestseller === "true",
-      stock: stock ? Number(stock) : 100,
+      sizes: Array.isArray(sizes) ? sizes : [],
+      bestseller: Boolean(bestseller),
+      stock: Number(items_left) || 0,
       gender: gender || "MEN",
       date: Date.now(),
     });
+
+    console.log("sizes:", sizes);
+    console.log("type:", typeof sizes);
 
     await product.save();
     res
@@ -135,10 +168,22 @@ export const updateProduct = async (req, res) => {
       subcategory,
       sizes,
       bestseller,
-      stock,
-      imageURL,
+      items_left,
+      image,
       gender,
     } = req.body;
+
+    // const updates = {
+    //   name,
+    //   brand,
+    //   description,
+    //   price: Number(price),
+    //   category,
+    //   subcategory,
+    //   bestseller: bestseller === "true",
+    //   stock: Number(stock),
+    //   gender: gender || "MEN",
+    // };
 
     const updates = {
       name,
@@ -147,16 +192,21 @@ export const updateProduct = async (req, res) => {
       price: Number(price),
       category,
       subcategory,
-      bestseller: bestseller === "true",
-      stock: Number(stock),
+      bestseller: Boolean(bestseller),
+      stock: Number(items_left) || 0,
       gender: gender || "MEN",
     };
-    if (sizes) updates.sizes = JSON.parse(sizes);
-
-    // Handle image uploads/updates
-    if (imageURL && typeof imageURL === "string" && imageURL.trim()) {
-      // Direct image URL provided
-      updates.image = [imageURL];
+    // if (sizes) updates.sizes = JSON.parse(sizes);
+    if (Array.isArray(sizes)) {
+      updates.sizes = sizes;
+    }
+    // // Handle image uploads/updates
+    // if (imageURL && typeof imageURL === "string" && imageURL.trim()) {
+    //   // Direct image URL provided
+    //   updates.image = [imageURL];
+    
+    if (image && typeof image === "string" && image.trim()) {
+      updates.image = [image];
     } else if (req.files && req.files.length > 0) {
       // Upload new files to Cloudinary
       const imageUrls = await Promise.all(
